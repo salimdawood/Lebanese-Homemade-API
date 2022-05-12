@@ -20,7 +20,7 @@ namespace LebaneseHomemade.Data.Service
         {
             var _type = new TypeModel()
             {
-                Name = typeName
+                Name = typeName.Trim().ToLower()
             };
             _appDbContext.Types.Add(_type);
             _appDbContext.SaveChanges();
@@ -42,9 +42,11 @@ namespace LebaneseHomemade.Data.Service
             return _type;
         }
 
-        public void UpdateType(int typeId)
+        public void UpdateType(int typeId,string typeName)
         {
-            
+            var _type = _appDbContext.Types.Where(type => type.Id == typeId).FirstOrDefault();
+            _type.Name = typeName.Trim().ToLower();
+            _appDbContext.SaveChanges();
         }
     }
 }

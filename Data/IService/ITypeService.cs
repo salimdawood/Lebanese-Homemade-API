@@ -10,10 +10,8 @@ namespace LebaneseHomemade.Data.IService
     public interface ITypeService
     {
         List<TypeModel> GetTypes();
-
         void DeleteType(int typeId);
         void AddType(string typeName);
-
-        void UpdateType(int typeId);
+        void UpdateType(int typeId,string typeName);
     }
 }

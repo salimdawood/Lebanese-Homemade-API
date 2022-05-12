@@ -19,6 +19,8 @@ namespace LebaneseHomemade.Controllers
         {
             _typeService = typeService;
         }
+        //Http Requests
+        //--------------//
         // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<TypeModel> Get()
@@ -26,23 +28,18 @@ namespace LebaneseHomemade.Controllers
             return _typeService.GetTypes();
         }
 
-        // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<ValuesController>
         [HttpPost]
         public void Post([FromBody] string typeName)
         {
+            _typeService.AddType(typeName);
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] string typeName)
         {
+            _typeService.UpdateType(id,typeName);
         }
 
         // DELETE api/<ValuesController>/5
