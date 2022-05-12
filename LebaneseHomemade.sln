@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LebaneseHomemade", "LebaneseHomemade.csproj", "{61B7BED7-4101-410C-B28B-57B6CC1DD482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LebaneseHomemadeLibrary", "LebaneseHomemadeLibrary\LebaneseHomemadeLibrary.csproj", "{F0C60F88-EE3D-4221-B895-4A21688733EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61B7BED7-4101-410C-B28B-57B6CC1DD482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B7BED7-4101-410C-B28B-57B6CC1DD482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B7BED7-4101-410C-B28B-57B6CC1DD482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B7BED7-4101-410C-B28B-57B6CC1DD482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0C60F88-EE3D-4221-B895-4A21688733EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0C60F88-EE3D-4221-B895-4A21688733EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0C60F88-EE3D-4221-B895-4A21688733EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0C60F88-EE3D-4221-B895-4A21688733EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0EC196E7-0A92-40F4-A7BE-F27322B4184D}
+	EndGlobalSection
+EndGlobal
