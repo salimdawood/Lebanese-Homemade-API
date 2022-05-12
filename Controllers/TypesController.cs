@@ -19,8 +19,6 @@ namespace LebaneseHomemade.Controllers
         {
             _typeService = typeService;
         }
-        //Http Requests
-        //--------------//
         // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<TypeModel> Get()

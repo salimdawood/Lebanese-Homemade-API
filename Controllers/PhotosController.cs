@@ -21,38 +21,17 @@ namespace LebaneseHomemade.Controllers
         {
             _photoService = photoService;
         }
-        // GET: api/<PhotosController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        // GET api/<PhotosController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            List<PhotoModel> _photos = _photoService.GetPhotos(id);
-            return Ok(_photos);
-        }
-
         // POST api/<PhotosController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        // PUT api/<PhotosController>/5
-        [HttpPut("{id}")]
-        public void Put([FromBody]List<PhotoViewModel> photoViewModel,int id)
+        [HttpPost]
+        public void Post([FromBody] PhotoViewModel photoViewModel)
         {
-            _photoService.UpdatePhotos(photoViewModel,id);
+            _photoService.AddPhoto(photoViewModel);
         }
-
         // DELETE api/<PhotosController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _photoService.DeletePhoto(id);
+        }
     }
 }
