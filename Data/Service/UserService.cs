@@ -31,12 +31,12 @@ namespace LebaneseHomemade.Data.Service
         }
         public bool NameExist(string name)
         {
-            var _user = _appDbContext.Users.Where(user => user.Name == name).FirstOrDefault();
-            return _user != null ? true : false;
+            var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower()).FirstOrDefault();
+            return _user != null;
         }
         public UserWithCardListViewModel GetUserByName(string name,string password)
         {
-            var _user = _appDbContext.Users.Where(user => user.Name == name && user.Password==password).Select(user => new UserWithCardListViewModel() {
+            var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower() && user.Password==password).Select(user => new UserWithCardListViewModel() {
                 Id = user.Id,
                 Name = user.Name,
                 Location = user.Location,
@@ -48,6 +48,24 @@ namespace LebaneseHomemade.Data.Service
                 _user.CardList = _cardService.GetCardsOfUser(_user.Id);
             }
             return _user;
+        }
+        public bool LogInValidation(string name, string password)
+        {
+            var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower() && user.Password == password).FirstOrDefault();
+            return _user != null;
+        }
+
+        public void UpdateUser(int userId,UserViewModel userViewModel)
+        {
+            var _user = _appDbContext.Users.Where(user => user.Id == userId).FirstOrDefault();
+            if(_user != null)
+            {
+                _user.Name = userViewModel.Name.Trim().ToLower();
+                _user.Email = userViewModel.Email.Trim().ToLower();
+                _user.Location = userViewModel.Location.Trim().ToLower();
+                _user.Password = userViewModel.Password.Trim();
+                _appDbContext.SaveChanges();
+            }
         }
     }
 }

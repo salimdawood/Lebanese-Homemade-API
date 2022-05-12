@@ -20,20 +20,17 @@ namespace LebaneseHomemade.Controllers
         {
             _userService = userService;
         }
-        // GET: api/<UsersController>
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    List<UserModel> _userList = _userService.GetUsers();
-        //    return Ok(_userList);
-        //}
-
+        // GET api/<UsersController>/5
+        [HttpGet("{name}")]
+        public bool Get(string name)
+        {
+            return _userService.NameExist(name);
+        }
         // GET api/<UsersController>/5
         [HttpGet("{name},{password}")]
-        public IActionResult Get(string name,string password)
+        public bool Get(string name,string password)
         {
-            var _user = _userService.GetUserByName(name,password);
-            return Ok(_user);
+            return _userService.LogInValidation(name, password);
         }
 
         // POST api/<UsersController>
@@ -45,8 +42,9 @@ namespace LebaneseHomemade.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] UserViewModel userViewModel)
         {
+            _userService.UpdateUser(id,userViewModel);
         }
 
         // DELETE api/<UsersController>/5

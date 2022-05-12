@@ -10,8 +10,10 @@ namespace LebaneseHomemade.Data.IService
     public interface IUserService
     {
         void AddUser(UserViewModel userViewModel);
+        void UpdateUser(int userId,UserViewModel userViewModel);
         bool NameExist(string name);
-        UserWithCardListViewModel GetUserByName(string name, string password);
+        bool LogInValidation(string name, string password);
+        //UserWithCardListViewModel GetUserByName(string name, string password);
        
     }
 }

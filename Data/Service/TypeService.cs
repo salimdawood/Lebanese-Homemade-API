@@ -45,8 +45,11 @@ namespace LebaneseHomemade.Data.Service
         public void UpdateType(int typeId,string typeName)
         {
             var _type = _appDbContext.Types.Where(type => type.Id == typeId).FirstOrDefault();
-            _type.Name = typeName.Trim().ToLower();
-            _appDbContext.SaveChanges();
+            if (_type != null)
+            {
+                _type.Name = typeName.Trim().ToLower();
+                _appDbContext.SaveChanges();
+            }
         }
     }
 }
