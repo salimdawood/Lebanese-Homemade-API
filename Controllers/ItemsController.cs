@@ -21,23 +21,24 @@ namespace LebaneseHomemade.Controllers
             _itemService = itemService;
         }
         // POST api/<ItemsController>
-        [HttpPost]
-        public void Post(List<ItemWithMenuIdViewModel> itemWithMenuIdViewModel, int menuId)
-        {
-            _itemService.AddItems(itemWithMenuIdViewModel, menuId);
-        }
-
-        // PUT api/<ItemsController>/5
-        [HttpPut("{id}")]
-        public void Put([FromBody] List<ItemViewModel> itemViewModel, int id)
-        {
-            _itemService.UpdateItems(itemViewModel, id);
-        }
-
-        // DELETE api/<ItemsController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
+        //[HttpPost]
+        //public void Post(List<ItemWithMenuIdViewModel> itemWithMenuIdViewModel, int menuId)
         //{
+        //    _itemService.AddItems(itemWithMenuIdViewModel, menuId);
         //}
+
+        //// PUT api/<ItemsController>/5
+        //[HttpPut("{id}")]
+        //public void Put([FromBody] List<ItemViewModel> itemViewModel, int id)
+        //{
+        //    _itemService.UpdateItems(itemViewModel, id);
+        //}
+
+        //DELETE api/<ItemsController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _itemService.DeleteItem(id);
+        }
     }
 }

@@ -9,8 +9,9 @@ namespace LebaneseHomemade.Data.IService
 {
     public interface IItemService
     {
-        void AddItems(List<ItemWithMenuIdViewModel> itemWithMenuIdViewModel, int menuId);
-        void UpdateItems(List<ItemViewModel> itemViewModel, int menuId);
+        void AddItems(ItemViewModel itemViewModel, int menuId);
+        void UpdateItems(List<ItemViewModel> itemViewModel, int itemId);
+        void DeleteItem(int itemId);
        
     }
 }

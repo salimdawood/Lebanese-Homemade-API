@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LebaneseHomemade.Data.Service;
+using LebaneseHomemadeLibrary;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +14,17 @@ namespace LebaneseHomemade.Controllers
     [ApiController]
     public class MenusController : ControllerBase
     {
-        // GET: api/<MenusController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly MenuService _menuService;
+        public MenusController(MenuService menuService)
         {
-            return new string[] { "value1", "value2" };
+            _menuService = menuService;
         }
 
         // GET api/<MenusController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<ItemModel> Get(int id)
         {
-            return "value";
-        }
-
-        // POST api/<MenusController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<MenusController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<MenusController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return _menuService.getMenuOfCard(id);
         }
     }
 }

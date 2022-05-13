@@ -15,20 +15,27 @@ namespace LebaneseHomemade.Data.Service
         {
             _appDbContext = appDbContext;
         }
-        public void AddItems(List<ItemWithMenuIdViewModel> itemWithMenuIdViewModel, int menuId)
+        public void AddItems(ItemViewModel itemViewModel, int menuId)
         {
-            foreach(var item in itemWithMenuIdViewModel)
-            {
                 var _item = new ItemModel()
                 {
                     MenuId=menuId,
-                    Name=item.Name,
-                    Price=item.Price
+                    Name=itemViewModel.Name,
+                    Price=itemViewModel.Price
                 };
                 _appDbContext.Items.Add(_item);
                 _appDbContext.SaveChanges();
-            }
         }
+
+        public void DeleteItem(int itemId)
+        {
+            var _item = new ItemModel()
+            {
+                Id = itemId
+            };
+            _appDbContext.Items.Remove(_item);
+        }
+
         public void UpdateItems(List<ItemViewModel> itemViewModel,int menuId)
         {
             var _items = _appDbContext.Items.Where(item => item.MenuId == menuId).ToList();

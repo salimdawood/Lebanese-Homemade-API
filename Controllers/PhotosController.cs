@@ -21,6 +21,12 @@ namespace LebaneseHomemade.Controllers
         {
             _photoService = photoService;
         }
+        // GET api/<PhotosController>/5
+        [HttpGet("{id}")]
+        public void Get(int cardId)
+        {
+            _photoService.GetPhotos(cardId);
+        }
         // POST api/<PhotosController>
         [HttpPost]
         public void Post([FromBody] PhotoViewModel photoViewModel)
