@@ -30,13 +30,23 @@ namespace LebaneseHomemade
         {
 
             services.AddControllers();
+            //db configuration
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
+            //services added
             services.AddTransient<UserService>();
             services.AddTransient<CardService>();
             services.AddTransient<MenuService>();
             services.AddTransient<ItemService>();
             services.AddTransient<PhotoService>();
             services.AddTransient<TypeService>();
+
+            // Add Cors
+            services.AddCors(options => options.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LebaneseHomemade", Version = "v1" });
@@ -56,6 +66,9 @@ namespace LebaneseHomemade
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // Enable Cors
+            app.UseCors("MyPolicy");
 
             app.UseEndpoints(endpoints =>
             {
