@@ -27,17 +27,18 @@ namespace LebaneseHomemade.Controllers
             return _userService.NameExist(name);
         }
         // GET api/<UsersController>/5
-        [HttpGet("{name},{password}")]
-        public bool Get(string name,string password)
+        [HttpGet()]
+        public UserWithCardListViewModel Get([FromQuery]string name,[FromQuery]string password)
         {
-            return _userService.LogInValidation(name, password);
+            return _userService.GetUserByName(name, password);
         }
 
         // POST api/<UsersController>
         [HttpPost]
-        public void Post([FromBody] UserViewModel userViewModel)
+        public int Post([FromBody] UserViewModel userViewModel)
         {
-            _userService.AddUser(userViewModel);
+            int successCode = _userService.AddUser(userViewModel);
+            return successCode;
         }
 
         // PUT api/<UsersController>/5

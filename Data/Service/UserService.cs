@@ -17,17 +17,30 @@ namespace LebaneseHomemade.Data.Service
             _appDbContext = appDbContext;
             _cardService = cardService;
         }
-        public void AddUser(UserViewModel userViewModel)
+        public int AddUser(UserViewModel userViewModel)
         {
-            var _user = new UserModel()
+            var _username = _appDbContext.Users.Where(user => user.Name == userViewModel.Name.Trim().ToLower()).FirstOrDefault();
+            if(_username != null)
             {
-                Name = userViewModel.Name,
-                Location = userViewModel.Location,
-                Email = userViewModel.Email,
-                Password = userViewModel.Password
-            };
-            _appDbContext.Users.Add(_user);
-            _appDbContext.SaveChanges();
+                return -1;
+            }
+            try
+            {
+                var _user = new UserModel()
+                {
+                    Name = userViewModel.Name,
+                    Location = userViewModel.Location,
+                    Email = userViewModel.Email,
+                    Password = userViewModel.Password
+                };
+                _appDbContext.Users.Add(_user);
+                _appDbContext.SaveChanges();
+                return 1;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
         public bool NameExist(string name)
         {
