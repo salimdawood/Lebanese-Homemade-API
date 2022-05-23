@@ -43,9 +43,10 @@ namespace LebaneseHomemade.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] UserViewModel userViewModel)
+        public int Put([FromRoute]int id, [FromBody] UserViewModel userViewModel)
         {
-            _userService.UpdateUser(id,userViewModel);
+            int successCode = _userService.UpdateUser(id,userViewModel);
+            return successCode;
         }
 
         // DELETE api/<UsersController>/5

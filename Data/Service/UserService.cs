@@ -68,17 +68,32 @@ namespace LebaneseHomemade.Data.Service
             return _user != null;
         }
 
-        public void UpdateUser(int userId,UserViewModel userViewModel)
+        public int UpdateUser(int userId,UserViewModel userViewModel)
         {
-            var _user = _appDbContext.Users.Where(user => user.Id == userId).FirstOrDefault();
-            if(_user != null)
+            var _username = _appDbContext.Users.Where(user => user.Name == userViewModel.Name.Trim().ToLower() && user.Id != userId).FirstOrDefault();
+            if (_username != null)
             {
-                _user.Name = userViewModel.Name.Trim().ToLower();
-                _user.Email = userViewModel.Email.Trim().ToLower();
-                _user.Location = userViewModel.Location.Trim().ToLower();
-                _user.Password = userViewModel.Password.Trim();
-                _appDbContext.SaveChanges();
+                return -1;
             }
+            try
+            {
+                var _user = _appDbContext.Users.Where(user => user.Id == userId).FirstOrDefault();
+                if (_user != null)
+                {
+                    _user.Name = userViewModel.Name.Trim().ToLower();
+                    _user.Email = userViewModel.Email.Trim().ToLower();
+                    _user.Location = userViewModel.Location.Trim().ToLower();
+                    _user.Password = userViewModel.Password.Trim();
+                    _appDbContext.SaveChanges();
+                }
+                return 1;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
+            
         }
     }
 }
