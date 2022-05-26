@@ -117,5 +117,22 @@ namespace LebaneseHomemade.Data.Service
             _appDbContext.Cards.Remove(_card);
             _appDbContext.SaveChanges();
         }
+
+        public void AddCard(AddCardViewModel addCardViewModel)
+        {
+            
+                var _card = new CardModel()
+                {
+                    Title = addCardViewModel.Title,
+                    FaceBookLink = addCardViewModel.FaceBookLink,
+                    InstagramLink = addCardViewModel.InstagramLink,
+                    WhatsAppLink = addCardViewModel.WhatsAppLink,
+                    TypeId = addCardViewModel.TypeId,
+                    UserId = addCardViewModel.UserId
+                };
+                _appDbContext.Cards.Add(_card);
+                _appDbContext.SaveChanges();
+           
+        }
     }
 }

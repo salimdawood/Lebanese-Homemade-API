@@ -1,5 +1,6 @@
 ﻿using LebaneseHomemade.Data.Pagination;
 using LebaneseHomemade.Data.Service;
+using LebaneseHomemade.Data.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -42,8 +43,9 @@ namespace LebaneseHomemade.Controllers
         }
         // POST api/<CardsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] AddCardViewModel addCardViewModel)
         {
+             _cardService.AddCard(addCardViewModel);
         }
 
         // PUT api/<CardsController>/5

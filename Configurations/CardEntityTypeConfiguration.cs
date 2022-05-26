@@ -20,6 +20,8 @@ namespace LebaneseHomemade.Configurations
             builder.Property(prop => prop.FaceBookLink).HasColumnType("varchar(2083)");
             builder.Property(prop => prop.WhatsAppLink).HasColumnType("varchar(2083)");
             builder.Property(prop => prop.DateCreated).HasColumnType("smalldatetime");
+
+            builder.Property(prop => prop.DateCreated).HasDefaultValueSql("getdate()");
         }
     }
 }

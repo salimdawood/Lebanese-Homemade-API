@@ -14,5 +14,6 @@ namespace LebaneseHomemade.Data.IService
         List<CardViewModel> GetCardsByTypeId(int typeId);
         List<CardViewModel> GetCardsOfUser(int userId);
         void DeleteCard(int cardId);
+        void AddCard(AddCardViewModel cardViewModel);
     }
 }
