@@ -19,4 +19,11 @@ namespace LebaneseHomemade.Data.ViewModel
         public string Type { get; set; }
         public DateTime DateCreated { get; set; }
     }
+    public class CardGalleryViewModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Type { get; set; }
+        public DateTime DateCreated { get; set; }
+    }
 }

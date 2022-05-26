@@ -47,19 +47,21 @@ namespace LebaneseHomemade.Data.Service
             var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower()).FirstOrDefault();
             return _user != null;
         }
-        public UserWithCardListViewModel GetUserByName(string name,string password)
+        public UserProfileViewModel GetUserByName(string name,string password)
         {
-            var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower() && user.Password==password).Select(user => new UserWithCardListViewModel() {
+            var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower() && user.Password == password).Select(user => new UserProfileViewModel() {
                 Id = user.Id,
                 Name = user.Name,
                 Location = user.Location,
                 Email = user.Email,
                 Password = user.Password,
+                CardList = _appDbContext.Cards.Where(card => card.UserId == user.Id).Select(card=>new CardGalleryViewModel() { 
+                    Id = card.Id,
+                    Title = card.Title,
+                    Type = card.Type.Name,
+                    DateCreated = card.DateCreated
+                }).ToList()
             }).FirstOrDefault();
-            if(_user != null)
-            {
-                _user.CardList = _cardService.GetCardsOfUser(_user.Id);
-            }
             return _user;
         }
         public bool LogInValidation(string name, string password)

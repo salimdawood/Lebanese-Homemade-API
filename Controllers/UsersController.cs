@@ -28,7 +28,7 @@ namespace LebaneseHomemade.Controllers
         }
         // GET api/<UsersController>/5
         [HttpGet()]
-        public UserWithCardListViewModel Get([FromQuery]string name,[FromQuery]string password)
+        public UserProfileViewModel Get([FromQuery]string name,[FromQuery]string password)
         {
             return _userService.GetUserByName(name, password);
         }
