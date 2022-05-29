@@ -43,9 +43,9 @@ namespace LebaneseHomemade.Controllers
         }
         // POST api/<CardsController>
         [HttpPost]
-        public void Post([FromBody] AddCardViewModel addCardViewModel)
+        public int Post([FromBody] AddCardViewModel addCardViewModel)
         {
-             _cardService.AddCard(addCardViewModel);
+             return _cardService.AddCard(addCardViewModel);
         }
 
         // PUT api/<CardsController>/5

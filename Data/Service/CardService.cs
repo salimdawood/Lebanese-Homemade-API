@@ -118,9 +118,10 @@ namespace LebaneseHomemade.Data.Service
             _appDbContext.SaveChanges();
         }
 
-        public void AddCard(AddCardViewModel addCardViewModel)
+        public int AddCard(AddCardViewModel addCardViewModel)
         {
-            
+            try
+            {
                 var _card = new CardModel()
                 {
                     Title = addCardViewModel.Title,
@@ -132,7 +133,12 @@ namespace LebaneseHomemade.Data.Service
                 };
                 _appDbContext.Cards.Add(_card);
                 _appDbContext.SaveChanges();
-           
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            } 
         }
     }
 }
