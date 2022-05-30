@@ -1,6 +1,7 @@
 ﻿using LebaneseHomemade.Data.Pagination;
 using LebaneseHomemade.Data.Service;
 using LebaneseHomemade.Data.ViewModel;
+using LebaneseHomemadeLibrary;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,12 @@ namespace LebaneseHomemade.Controllers
         {
             var _cards = _cardService.GetCardsOfUser(id);
             return Ok(_cards);
+        }
+        // GET api/<CardsController>/5
+        [HttpGet("{id}")]
+        public CardViewModel GetCardsById([FromRoute] int id)
+        {
+            return _cardService.GetCardById(id);
         }
         // POST api/<CardsController>
         [HttpPost]

@@ -148,5 +148,19 @@ namespace LebaneseHomemade.Data.Service
                 return -1;
             } 
         }
+
+        public CardViewModel GetCardById(int cardId)
+        {
+            return _appDbContext.Cards.Where(card => card.Id == cardId).Select(card=>new CardViewModel()
+            {
+                Id=card.Id,
+                Title=card.Title,
+                Type=card.Type.Name,
+                InstagramLink=card.InstagramLink,
+                FaceBookLink=card.FaceBookLink,
+                WhatsAppLink=card.WhatsAppLink,
+                DateCreated=card.DateCreated
+            }).FirstOrDefault();
+        }
     }
 }
