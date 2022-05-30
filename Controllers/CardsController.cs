@@ -56,10 +56,9 @@ namespace LebaneseHomemade.Controllers
 
         // DELETE api/<CardsController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public int Delete([FromRoute]int id)
         {
-            _cardService.DeleteCard(id);
-            return Ok();
+            return _cardService.DeleteCard(id);
         }
     }
 }

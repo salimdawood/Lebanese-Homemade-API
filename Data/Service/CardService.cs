@@ -108,14 +108,22 @@ namespace LebaneseHomemade.Data.Service
             }).ToList();
             return _card;
         }
-        public void DeleteCard(int cardId)
+        public int DeleteCard(int cardId)
         {
-            var _card = new CardModel()
+            try
             {
-                Id=cardId
-            };
-            _appDbContext.Cards.Remove(_card);
-            _appDbContext.SaveChanges();
+                var _card = new CardModel()
+                {
+                    Id = cardId
+                };
+                _appDbContext.Cards.Remove(_card);
+                _appDbContext.SaveChanges();
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
         }
 
         public int AddCard(AddCardViewModel addCardViewModel)
@@ -133,7 +141,7 @@ namespace LebaneseHomemade.Data.Service
                 };
                 _appDbContext.Cards.Add(_card);
                 _appDbContext.SaveChanges();
-                return 1;
+                return _card.Id;
             }
             catch (Exception)
             {

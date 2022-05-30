@@ -13,7 +13,7 @@ namespace LebaneseHomemade.Data.IService
         List<CardViewModel> GetCards(PaginationParameter paginationParameter);
         List<CardViewModel> GetCardsByTypeId(int typeId);
         List<CardViewModel> GetCardsOfUser(int userId);
-        void DeleteCard(int cardId);
+        int DeleteCard(int cardId);
         int AddCard(AddCardViewModel cardViewModel);
     }
 }
