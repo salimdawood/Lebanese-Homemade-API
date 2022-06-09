@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace LebaneseHomemade.Data.Service
 {
@@ -153,35 +155,33 @@ namespace LebaneseHomemade.Data.Service
             };
             //add photolist to card object
             _card.PhotoList = new List<PhotoModel>();
-            foreach (var photo in addCardViewModel.PhotoList)
+            /*foreach (var photo in addCardViewModel.PhotoList)
             {
                 var _photo = new PhotoModel()
                 {
                     Name = photo.Name
                 };
                 _card.PhotoList.Add(_photo);
-            }
+            }*/
             //add menu and add itemlist to it then add the menu to card object
             _card.Menu = new MenuModel
             {
                 ItemList = new List<ItemModel>()
             };
-            if (addCardViewModel.Menu != null)
+            foreach (var item in addCardViewModel.ItemList)
             {
-                foreach (var item in addCardViewModel.Menu.ItemList)
+                ItemListViewModel itemListViewModel = JsonConvert.DeserializeObject <ItemListViewModel>(item);
+                var _item = new ItemModel()
                 {
-                    var _item = new ItemModel()
-                    {
-                        Name = item.Name,
-                        Price = item.Price
-                    };
-                    _card.Menu.ItemList.Add(_item);
-                }
+                    Name = itemListViewModel.Name,
+                    Price = itemListViewModel.Price
+                }; 
+                _card.Menu.ItemList.Add(_item);
             }
             //add new entity to db
             _appDbContext.Cards.Add(_card);
             _appDbContext.SaveChanges();
-
+            var _cardId = _card.Id;
             return _card;
 
 

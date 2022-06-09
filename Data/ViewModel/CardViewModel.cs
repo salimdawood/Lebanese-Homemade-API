@@ -36,6 +36,6 @@ namespace LebaneseHomemade.Data.ViewModel
         public int TypeId { get; set; }
         public int UserId { get; set; }
         public List<IFormFile> PhotoList { get; set; }
-        public List<ItemListViewModel> ItemList { get; set; }
+        public List<string> ItemList { get; set; }
     }
 }

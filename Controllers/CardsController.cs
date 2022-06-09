@@ -47,13 +47,10 @@ namespace LebaneseHomemade.Controllers
         }
         // POST api/<CardsController>
         [HttpPost]
-        public void Post([FromForm] string cardSerializedObject)
+        public CardModel Post([FromForm] AddCardViewModel addCardViewModel)
         {
-            //System.Diagnostics.Debug.Write("\n...................\n"+cardSerializedObject);
-            AddCardViewModel addCardViewModel = JsonConvert.DeserializeObject<AddCardViewModel>(cardSerializedObject);
-            System.Diagnostics.Debug.Write("\n...................\n" + addCardViewModel);
-            //return _cardService.AddCard(addCardViewModel);
-
+            //return addCardViewModel;
+            return _cardService.AddCard(addCardViewModel);
         }
         // PUT api/<CardsController>/5
         [HttpPut("{id}")]
