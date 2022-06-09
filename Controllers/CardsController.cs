@@ -3,10 +3,7 @@ using LebaneseHomemade.Data.Service;
 using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,11 +47,14 @@ namespace LebaneseHomemade.Controllers
         }
         // POST api/<CardsController>
         [HttpPost]
-        public int Post([FromBody] AddCardViewModel addCardViewModel)
+        public void Post([FromForm] string cardSerializedObject)
         {
-             return _cardService.AddCard(addCardViewModel);
-        }
+            //System.Diagnostics.Debug.Write("\n...................\n"+cardSerializedObject);
+            AddCardViewModel addCardViewModel = JsonConvert.DeserializeObject<AddCardViewModel>(cardSerializedObject);
+            System.Diagnostics.Debug.Write("\n...................\n" + addCardViewModel);
+            //return _cardService.AddCard(addCardViewModel);
 
+        }
         // PUT api/<CardsController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
@@ -67,5 +67,6 @@ namespace LebaneseHomemade.Controllers
         {
             return _cardService.DeleteCard(id);
         }
+        
     }
 }

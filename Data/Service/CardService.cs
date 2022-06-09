@@ -2,8 +2,11 @@
 using LebaneseHomemade.Data.Pagination;
 using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,9 +15,22 @@ namespace LebaneseHomemade.Data.Service
     public class CardService:ICardService
     {
         private readonly AppDbContext _appDbContext;
-        public CardService(AppDbContext appDbContext)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public CardService(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
         {
             _appDbContext = appDbContext;
+            _webHostEnvironment = webHostEnvironment;
+        }
+        public async Task<string> ImageUpload(IFormFile imageFile)
+        {
+            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
+            var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", imageName);
+            using (var fileStream = new FileStream(imagePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(fileStream);
+            }
+            return imageName;
         }
         public List<CardViewModel> GetCards(PaginationParameter paginationParameter)
         {
@@ -31,8 +47,7 @@ namespace LebaneseHomemade.Data.Service
                 PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
                 {
                     Id = photo.Id,
-                    Name = photo.Name,
-                    Extension = photo.Extension
+                    Name = photo.Name
                 }).ToList(),
                 Menu = (card.Menu == null) ? null : new MenuViewModel()
                 {
@@ -61,8 +76,7 @@ namespace LebaneseHomemade.Data.Service
                 PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
                 {
                     Id = photo.Id,
-                    Name = photo.Name,
-                    Extension = photo.Extension
+                    Name = photo.Name
                 }).ToList(),
                 Menu = (card.Menu == null) ? null : new MenuViewModel()
                 {
@@ -91,8 +105,7 @@ namespace LebaneseHomemade.Data.Service
                 PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
                 {
                     Id = photo.Id,
-                    Name = photo.Name,
-                    Extension = photo.Extension
+                    Name = photo.Name
                 }).ToList(),
                 Menu = (card.Menu == null) ? null : new MenuViewModel()
                 {
@@ -126,10 +139,58 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
-        public int AddCard(AddCardViewModel addCardViewModel)
+        public CardModel AddCard(AddCardViewModel addCardViewModel)
         {
+            //add card basic information
+            var _card = new CardModel()
+            {
+                Title = addCardViewModel.Title,
+                FaceBookLink = addCardViewModel.FaceBookLink,
+                InstagramLink = addCardViewModel.InstagramLink,
+                WhatsAppLink = addCardViewModel.WhatsAppLink,
+                TypeId = addCardViewModel.TypeId,
+                UserId = addCardViewModel.UserId
+            };
+            //add photolist to card object
+            _card.PhotoList = new List<PhotoModel>();
+            foreach (var photo in addCardViewModel.PhotoList)
+            {
+                var _photo = new PhotoModel()
+                {
+                    Name = photo.Name
+                };
+                _card.PhotoList.Add(_photo);
+            }
+            //add menu and add itemlist to it then add the menu to card object
+            _card.Menu = new MenuModel
+            {
+                ItemList = new List<ItemModel>()
+            };
+            if (addCardViewModel.Menu != null)
+            {
+                foreach (var item in addCardViewModel.Menu.ItemList)
+                {
+                    var _item = new ItemModel()
+                    {
+                        Name = item.Name,
+                        Price = item.Price
+                    };
+                    _card.Menu.ItemList.Add(_item);
+                }
+            }
+            //add new entity to db
+            _appDbContext.Cards.Add(_card);
+            _appDbContext.SaveChanges();
+
+            return _card;
+
+
+
+
+            /*using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {
+                //add card basic information
                 var _card = new CardModel()
                 {
                     Title = addCardViewModel.Title,
@@ -139,14 +200,46 @@ namespace LebaneseHomemade.Data.Service
                     TypeId = addCardViewModel.TypeId,
                     UserId = addCardViewModel.UserId
                 };
+                //add photolist to card object
+
+                _card.PhotoList = new List<PhotoModel>();
+                foreach (var photo in addCardViewModel.PhotoList)
+                {
+                    var _photo = new PhotoModel()
+                    {
+                        Name = photo.Name
+                    };
+                    _card.PhotoList.Add(_photo);
+                }
+                //add menu and add itemlist to it then add the menu to card object
+                _card.Menu = new MenuModel
+                {
+                    ItemList = new List<ItemModel>()
+                };
+                if (addCardViewModel.Menu != null)
+                { 
+                    foreach (var item in addCardViewModel.Menu.ItemList)
+                    {
+                        var _item = new ItemModel()
+                        {
+                            Name = item.Name,
+                            Price = item.Price
+                        };
+                        _card.Menu.ItemList.Add(_item);
+                    }
+                }
+                //add new entity to db
                 _appDbContext.Cards.Add(_card);
                 _appDbContext.SaveChanges();
-                return _card.Id;
+                _transaction.Commit();
+                var _cardId = _card.Id;
+                return _cardId;
             }
             catch (Exception)
             {
+                _transaction.Rollback();
                 return -1;
-            } 
+            }*/
         }
 
         public CardViewModel GetCardById(int cardId)

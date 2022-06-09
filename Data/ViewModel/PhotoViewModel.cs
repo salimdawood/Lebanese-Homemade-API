@@ -10,11 +10,9 @@ namespace LebaneseHomemade.Data.ViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Extension { get; set; }
     }
-    public class PhotoNoIdViewModel
+    public class PhotoWithCardIdViewModel
     {
         public string Name { get; set; }
-        public string Extension { get; set; }
     }
 }

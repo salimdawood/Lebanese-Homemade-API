@@ -12,4 +12,8 @@ namespace LebaneseHomemade.Data.ViewModel
         public int Id { get; set; }
         public List<ItemViewModel> ItemList { get; set; }
     }
+    public class MenuWithCardIdViewModel
+    {
+        public List<ItemListViewModel> ItemList { get; set; }
+    }
 }

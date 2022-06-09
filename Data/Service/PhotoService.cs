@@ -20,8 +20,7 @@ namespace LebaneseHomemade.Data.Service
         {
             var _photo = new PhotoModel()
             {
-                Name = photoViewModel.Name,
-                Extension = photoViewModel.Extension
+                Name = photoViewModel.Name
             };
             _appDbContext.Photos.Add(_photo);
             _appDbContext.SaveChanges();

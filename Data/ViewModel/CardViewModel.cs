@@ -1,4 +1,5 @@
 ﻿using LebaneseHomemadeLibrary;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,5 +35,7 @@ namespace LebaneseHomemade.Data.ViewModel
         public string WhatsAppLink { get; set; }
         public int TypeId { get; set; }
         public int UserId { get; set; }
+        public List<IFormFile> PhotoList { get; set; }
+        public List<ItemListViewModel> ItemList { get; set; }
     }
 }

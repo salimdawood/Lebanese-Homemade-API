@@ -12,9 +12,8 @@ namespace LebaneseHomemade.Data.ViewModel
         public string Name { get; set; }
         public int Price { get; set; }
     }
-    public class ItemWithMenuIdViewModel
+    public class ItemListViewModel
     {
-        public int MenuId { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
     }
