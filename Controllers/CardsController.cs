@@ -4,6 +4,7 @@ using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -47,17 +48,16 @@ namespace LebaneseHomemade.Controllers
         }
         // POST api/<CardsController>
         [HttpPost]
-        public CardModel Post([FromForm] AddCardViewModel addCardViewModel)
+        public async Task<CardModel> Post([FromForm] AddCardViewModel addCardViewModel)
         {
             //return addCardViewModel;
-            return _cardService.AddCard(addCardViewModel);
+            return await _cardService.AddCard(addCardViewModel);
         }
         // PUT api/<CardsController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
-
         // DELETE api/<CardsController>/5
         [HttpDelete("{id}")]
         public int Delete([FromRoute]int id)

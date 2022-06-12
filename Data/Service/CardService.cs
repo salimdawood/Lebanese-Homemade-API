@@ -141,7 +141,7 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
-        public CardModel AddCard(AddCardViewModel addCardViewModel)
+        public async Task<CardModel> AddCard(AddCardViewModel addCardViewModel)
         {
             //add card basic information
             var _card = new CardModel()
@@ -155,14 +155,14 @@ namespace LebaneseHomemade.Data.Service
             };
             //add photolist to card object
             _card.PhotoList = new List<PhotoModel>();
-            /*foreach (var photo in addCardViewModel.PhotoList)
+            foreach (var photoFile in addCardViewModel.PhotoList)
             {
                 var _photo = new PhotoModel()
                 {
-                    Name = photo.Name
+                    Name = await ImageUpload(photoFile)
                 };
                 _card.PhotoList.Add(_photo);
-            }*/
+            }
             //add menu and add itemlist to it then add the menu to card object
             _card.Menu = new MenuModel
             {
