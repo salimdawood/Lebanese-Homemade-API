@@ -141,53 +141,9 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
-        public async Task<CardModel> AddCard(AddCardViewModel addCardViewModel)
+        public async Task<int> AddCard(AddCardViewModel addCardViewModel)
         {
-            //add card basic information
-            var _card = new CardModel()
-            {
-                Title = addCardViewModel.Title,
-                FaceBookLink = addCardViewModel.FaceBookLink,
-                InstagramLink = addCardViewModel.InstagramLink,
-                WhatsAppLink = addCardViewModel.WhatsAppLink,
-                TypeId = addCardViewModel.TypeId,
-                UserId = addCardViewModel.UserId
-            };
-            //add photolist to card object
-            _card.PhotoList = new List<PhotoModel>();
-            foreach (var photoFile in addCardViewModel.PhotoList)
-            {
-                var _photo = new PhotoModel()
-                {
-                    Name = await ImageUpload(photoFile)
-                };
-                _card.PhotoList.Add(_photo);
-            }
-            //add menu and add itemlist to it then add the menu to card object
-            _card.Menu = new MenuModel
-            {
-                ItemList = new List<ItemModel>()
-            };
-            foreach (var item in addCardViewModel.ItemList)
-            {
-                ItemListViewModel itemListViewModel = JsonConvert.DeserializeObject <ItemListViewModel>(item);
-                var _item = new ItemModel()
-                {
-                    Name = itemListViewModel.Name,
-                    Price = itemListViewModel.Price
-                }; 
-                _card.Menu.ItemList.Add(_item);
-            }
-            //add new entity to db
-            _appDbContext.Cards.Add(_card);
-            _appDbContext.SaveChanges();
-            var _cardId = _card.Id;
-            return _card;
-
-
-
-
-            /*using var _transaction = _appDbContext.Database.BeginTransaction();
+            using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {
                 //add card basic information
@@ -201,29 +157,32 @@ namespace LebaneseHomemade.Data.Service
                     UserId = addCardViewModel.UserId
                 };
                 //add photolist to card object
-
                 _card.PhotoList = new List<PhotoModel>();
-                foreach (var photo in addCardViewModel.PhotoList)
+                if (addCardViewModel.PhotoList != null)
                 {
-                    var _photo = new PhotoModel()
+                    foreach (var photoFile in addCardViewModel.PhotoList)
                     {
-                        Name = photo.Name
-                    };
-                    _card.PhotoList.Add(_photo);
+                        var _photo = new PhotoModel()
+                        {
+                            Name = await ImageUpload(photoFile)
+                        };
+                        _card.PhotoList.Add(_photo);
+                    }
                 }
                 //add menu and add itemlist to it then add the menu to card object
                 _card.Menu = new MenuModel
                 {
                     ItemList = new List<ItemModel>()
                 };
-                if (addCardViewModel.Menu != null)
-                { 
-                    foreach (var item in addCardViewModel.Menu.ItemList)
+                if (addCardViewModel.ItemList != null)
+                {
+                    foreach (var item in addCardViewModel.ItemList)
                     {
+                        ItemListViewModel itemListViewModel = JsonConvert.DeserializeObject<ItemListViewModel>(item);
                         var _item = new ItemModel()
                         {
-                            Name = item.Name,
-                            Price = item.Price
+                            Name = itemListViewModel.Name,
+                            Price = itemListViewModel.Price
                         };
                         _card.Menu.ItemList.Add(_item);
                     }
@@ -239,7 +198,7 @@ namespace LebaneseHomemade.Data.Service
             {
                 _transaction.Rollback();
                 return -1;
-            }*/
+            }
         }
 
         public CardViewModel GetCardById(int cardId)

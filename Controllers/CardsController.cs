@@ -48,7 +48,7 @@ namespace LebaneseHomemade.Controllers
         }
         // POST api/<CardsController>
         [HttpPost]
-        public async Task<CardModel> Post([FromForm] AddCardViewModel addCardViewModel)
+        public async Task<int> Post([FromForm] AddCardViewModel addCardViewModel)
         {
             //return addCardViewModel;
             return await _cardService.AddCard(addCardViewModel);
