@@ -42,7 +42,7 @@ namespace LebaneseHomemade.Controllers
         }
         // GET api/<CardsController>/5
         [HttpGet("{id}")]
-        public CardViewModel GetCardsById([FromRoute] int id)
+        public CardModel GetCardsById([FromRoute] int id)
         {
             return _cardService.GetCardById(id);
         }

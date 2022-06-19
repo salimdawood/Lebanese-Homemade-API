@@ -17,11 +17,13 @@ namespace LebaneseHomemade.Data.Service
     public class CardService:ICardService
     {
         private readonly AppDbContext _appDbContext;
+        private readonly MenuService _menuService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public CardService(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment)
+        public CardService(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment,MenuService menuService)
         {
             _appDbContext = appDbContext;
             _webHostEnvironment = webHostEnvironment;
+            _menuService = menuService;
         }
         public async Task<string> ImageUpload(IFormFile imageFile)
         {
@@ -201,8 +203,9 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
-        public CardViewModel GetCardById(int cardId)
+        public CardModel GetCardById(int cardId)
         {
+            /*
             return _appDbContext.Cards.Where(card => card.Id == cardId).Select(card=>new CardViewModel()
             {
                 Id=card.Id,
@@ -213,6 +216,11 @@ namespace LebaneseHomemade.Data.Service
                 WhatsAppLink=card.WhatsAppLink,
                 DateCreated=card.DateCreated
             }).FirstOrDefault();
+            */
+            var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
+            _card.Menu = _menuService.getMenuOfCard(_card.Id);
+
+            return _card;
         }
     }
 }

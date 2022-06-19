@@ -14,15 +14,15 @@ namespace LebaneseHomemade.Data.Service
         {
             _appDbContext = appDbContext;
         }
-        public List<ItemModel> getMenuOfCard(int cardId)
+        public MenuModel getMenuOfCard(int cardId)
         {
-            List<ItemModel> _menuWithItemList = new List<ItemModel>();
+            //List<ItemModel> _menuWithItemList = new List<ItemModel>();
             var _menu = _appDbContext.Menus.Where(menu=>menu.CardId==cardId).FirstOrDefault();
             if(_menu != null)
             {
-                _menuWithItemList = _appDbContext.Items.Where(item => item.MenuId == _menu.Id).ToList();
+               _menu.ItemList = _appDbContext.Items.Where(item => item.MenuId == _menu.Id).ToList();
             }
-            return _menuWithItemList;
+            return _menu;
         }
     }
 }

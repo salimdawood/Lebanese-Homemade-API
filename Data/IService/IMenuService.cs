@@ -8,6 +8,6 @@ namespace LebaneseHomemade.Data.IService
 {
     public interface IMenuService
     {
-        List<ItemModel> getMenuOfCard(int cardId);
+        MenuModel getMenuOfCard(int cardId);
     }
 }

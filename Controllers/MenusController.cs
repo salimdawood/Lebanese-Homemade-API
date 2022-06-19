@@ -22,7 +22,7 @@ namespace LebaneseHomemade.Controllers
 
         // GET api/<MenusController>/5
         [HttpGet("{id}")]
-        public List<ItemModel> Get(int id)
+        public MenuModel Get(int id)
         {
             return _menuService.getMenuOfCard(id);
         }
