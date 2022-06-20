@@ -26,5 +26,11 @@ namespace LebaneseHomemade.Controllers
         {
             return _menuService.getMenuOfCard(id);
         }
+        // Delete api/<MenusController>/5
+        [HttpDelete("{id}")]
+        public int Delete(int id)
+        {
+            return _menuService.deleteMenuOfCard(id);
+        }
     }
 }

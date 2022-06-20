@@ -9,5 +9,6 @@ namespace LebaneseHomemade.Data.IService
     public interface IMenuService
     {
         MenuModel getMenuOfCard(int cardId);
+        int deleteMenuOfCard(int menuId);
     }
 }
