@@ -1,4 +1,5 @@
 ﻿using LebaneseHomemade.Data.Service;
+using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,15 +23,21 @@ namespace LebaneseHomemade.Controllers
 
         // GET api/<MenusController>/5
         [HttpGet("{id}")]
-        public MenuModel Get(int id)
+        public MenuModel Get([FromRoute] int id)
         {
-            return _menuService.getMenuOfCard(id);
+            return _menuService.GetMenuOfCard(id);
+        }
+        // Update api/<MenusController>/5
+        [HttpPut("{id}")]
+        public int Put([FromRoute]int id,[FromBody] List<ItemListViewModel> itemListViewModels)
+        {
+            return _menuService.UpdateMenuOfCard(id, itemListViewModels);
         }
         // Delete api/<MenusController>/5
         [HttpDelete("{id}")]
-        public int Delete(int id)
+        public int Delete([FromRoute]int id)
         {
-            return _menuService.deleteMenuOfCard(id);
+            return _menuService.DeleteMenuOfCard(id);
         }
     }
 }

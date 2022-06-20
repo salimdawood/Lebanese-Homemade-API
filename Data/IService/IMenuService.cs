@@ -1,4 +1,5 @@
-﻿using LebaneseHomemadeLibrary;
+﻿using LebaneseHomemade.Data.ViewModel;
+using LebaneseHomemadeLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,8 @@ namespace LebaneseHomemade.Data.IService
 {
     public interface IMenuService
     {
-        MenuModel getMenuOfCard(int cardId);
-        int deleteMenuOfCard(int menuId);
+        MenuModel GetMenuOfCard(int cardId);
+        int DeleteMenuOfCard(int menuId);
+        int UpdateMenuOfCard(int cardId, List<ItemListViewModel> itemListViewModels);
     }
 }

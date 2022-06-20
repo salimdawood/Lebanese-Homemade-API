@@ -218,7 +218,7 @@ namespace LebaneseHomemade.Data.Service
             }).FirstOrDefault();
             */
             var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
-            _card.Menu = _menuService.getMenuOfCard(_card.Id);
+            _card.Menu = _menuService.GetMenuOfCard(_card.Id);
 
             return _card;
         }

@@ -1,4 +1,5 @@
 ﻿using LebaneseHomemade.Data.IService;
+using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace LebaneseHomemade.Data.Service
             _appDbContext = appDbContext;
         }
 
-        public int deleteMenuOfCard(int menuId)
+        public int DeleteMenuOfCard(int menuId)
         { 
             try
             {
@@ -34,15 +35,45 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
-        public MenuModel getMenuOfCard(int cardId)
+        public MenuModel GetMenuOfCard(int cardId)
         {
-            //List<ItemModel> _menuWithItemList = new List<ItemModel>();
             var _menu = _appDbContext.Menus.Where(menu=>menu.CardId==cardId).FirstOrDefault();
             if(_menu != null)
             {
                _menu.ItemList = _appDbContext.Items.Where(item => item.MenuId == _menu.Id).ToList();
             }
             return _menu;
+        }
+
+        public int UpdateMenuOfCard(int cardId, List<ItemListViewModel> itemListViewModels)
+        {
+            try
+            {
+                var _menu = _appDbContext.Menus.Where(menu => menu.CardId == cardId).FirstOrDefault();
+                var _itemList = _appDbContext.Items.Where(item => item.MenuId == _menu.Id).ToList();
+                List<ItemModel> _itemModels = new();
+
+                foreach (var item in itemListViewModels)
+                {
+                    var _item = new ItemModel
+                    {
+                        Name = item.Name,
+                        Price = item.Price
+                    };
+                    _itemModels.Add(_item);
+                }
+                //remove old menu items
+                _appDbContext.Items.RemoveRange(_itemList);
+                //addthe updated menu items
+                _menu.ItemList = _itemModels;
+
+                _appDbContext.SaveChanges();
+                return 1;
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
         }
     }
 }
