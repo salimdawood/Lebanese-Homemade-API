@@ -222,5 +222,32 @@ namespace LebaneseHomemade.Data.Service
 
             return _card;
         }
+
+        public int UpdateCardById(int cardId, UpdateCardViewModel updateCardViewModel)
+        {
+            using var _transaction = _appDbContext.Database.BeginTransaction();
+            var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
+            try
+            {
+                if(_card != null)
+                {
+                    _card.Title = updateCardViewModel.Title;
+                    _card.FaceBookLink = updateCardViewModel.FaceBookLink;
+                    _card.InstagramLink = updateCardViewModel.InstagramLink;
+                    _card.InstagramLink = updateCardViewModel.InstagramLink;
+                    _card.TypeId = updateCardViewModel.TypeId;
+                }
+                
+                _appDbContext.SaveChanges();
+                _transaction.Commit();
+                var _cardId = _card.Id;
+                return _cardId;
+            }
+            catch (Exception)
+            {
+                _transaction.Rollback();
+                return -1;
+            }
+        }
     }
 }

@@ -38,4 +38,13 @@ namespace LebaneseHomemade.Data.ViewModel
         public List<IFormFile> PhotoList { get; set; }
         public List<string> ItemList { get; set; }
     }
+    public class UpdateCardViewModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string InstagramLink { get; set; }
+        public string FaceBookLink { get; set; }
+        public string WhatsAppLink { get; set; }
+        public int TypeId { get; set; }
+    }
 }

@@ -55,8 +55,9 @@ namespace LebaneseHomemade.Controllers
         }
         // PUT api/<CardsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public int Put([FromRoute]int id,[FromBody] UpdateCardViewModel updateCardViewModel)
         {
+            return _cardService.UpdateCardById(id, updateCardViewModel);
         }
         // DELETE api/<CardsController>/5
         [HttpDelete("{id}")]
