@@ -18,24 +18,18 @@ namespace LebaneseHomemade.Data.Service
     {
         private readonly AppDbContext _appDbContext;
         private readonly MenuService _menuService;
+        private readonly PhotoService _photoService;
+        private readonly ImageUploadService _imageUploadService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public CardService(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment,MenuService menuService)
+        public CardService(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment,MenuService menuService,PhotoService photoService,ImageUploadService imageUploadService)
         {
             _appDbContext = appDbContext;
             _webHostEnvironment = webHostEnvironment;
             _menuService = menuService;
+            _photoService = photoService;
+            _imageUploadService = imageUploadService;
         }
-        public async Task<string> ImageUpload(IFormFile imageFile)
-        {
-            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
-            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
-            var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", imageName);
-            using (var fileStream = new FileStream(imagePath, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(fileStream);
-            }
-            return imageName;
-        }
+
         public List<CardViewModel> GetCards(PaginationParameter paginationParameter)
         {
             var _card = _appDbContext.Cards.Skip((paginationParameter.PageNumber-1)*paginationParameter.PageSize)
@@ -162,6 +156,7 @@ namespace LebaneseHomemade.Data.Service
                 _card.PhotoList = new List<PhotoModel>();
                 if (addCardViewModel.PhotoList != null)
                 {
+                    /*
                     foreach (var photoFile in addCardViewModel.PhotoList)
                     {
                         var _photo = new PhotoModel()
@@ -170,6 +165,9 @@ namespace LebaneseHomemade.Data.Service
                         };
                         _card.PhotoList.Add(_photo);
                     }
+                    */
+                    var _imageNames = await _imageUploadService.ImageUpload(addCardViewModel.PhotoList);
+                    _card.PhotoList = _imageNames;
                 }
                 //add menu and add itemlist to it then add the menu to card object
                 _card.Menu = new MenuModel
@@ -205,20 +203,9 @@ namespace LebaneseHomemade.Data.Service
 
         public CardModel GetCardById(int cardId)
         {
-            /*
-            return _appDbContext.Cards.Where(card => card.Id == cardId).Select(card=>new CardViewModel()
-            {
-                Id=card.Id,
-                Title=card.Title,
-                Type=card.Type.Name,
-                InstagramLink=card.InstagramLink,
-                FaceBookLink=card.FaceBookLink,
-                WhatsAppLink=card.WhatsAppLink,
-                DateCreated=card.DateCreated
-            }).FirstOrDefault();
-            */
             var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
             _card.Menu = _menuService.GetMenuOfCard(_card.Id);
+            _card.PhotoList = _photoService.GetPhotos(_card.Id);
 
             return _card;
         }

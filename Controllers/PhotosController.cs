@@ -33,11 +33,17 @@ namespace LebaneseHomemade.Controllers
         {
             _photoService.AddPhoto(photoViewModel);
         }
+        // POST api/<PhotosController>
+        [HttpPut("{id}")]
+        public Task<int> Put([FromRoute] int id,[FromForm] UpdatePhotoViewModel updatePhotoViewModel)
+        {
+            return _photoService.UpdatePhotos(id, updatePhotoViewModel);
+        }
         // DELETE api/<PhotosController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public int Delete([FromRoute]int id)
         {
-            _photoService.DeletePhoto(id);
+            return _photoService.DeletePhoto(id);
         }
     }
 }

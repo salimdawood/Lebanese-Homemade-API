@@ -11,11 +11,9 @@ namespace LebaneseHomemade.Data.Service
     public class UserService:IUserService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly CardService _cardService;
-        public UserService(AppDbContext appDbContext, CardService cardService)
+        public UserService(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-            _cardService = cardService;
         }
         public int AddUser(UserViewModel userViewModel)
         {
