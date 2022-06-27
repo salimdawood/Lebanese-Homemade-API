@@ -35,7 +35,7 @@ namespace LebaneseHomemade.Controllers
         }
         // POST api/<PhotosController>
         [HttpPut("{id}")]
-        public Task<CardModel> Put([FromRoute] int id,[FromForm] UpdatePhotoViewModel updatePhotoViewModel)
+        public Task<List<PhotoModel>> Put([FromRoute] int id,[FromForm] UpdatePhotoViewModel updatePhotoViewModel)
         {
             return _photoService.UpdatePhotos(id, updatePhotoViewModel);
         }

@@ -12,6 +12,6 @@ namespace LebaneseHomemade.Data.IService
         List<PhotoModel> GetPhotos(int cardId);
         void AddPhoto(PhotoViewModel photoViewModel);
         int DeletePhoto(int cardId);
-        Task<CardModel> UpdatePhotos(int cardId,UpdatePhotoViewModel updatePhotoViewModel);
+        Task<List<PhotoModel>> UpdatePhotos(int cardId,UpdatePhotoViewModel updatePhotoViewModel);
     }
 }

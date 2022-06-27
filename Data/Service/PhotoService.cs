@@ -64,7 +64,7 @@ namespace LebaneseHomemade.Data.Service
             return _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
         }
 
-        public async Task<CardModel> UpdatePhotos(int cardId, UpdatePhotoViewModel updatePhotoViewModel)
+        public async Task<List<PhotoModel>> UpdatePhotos(int cardId, UpdatePhotoViewModel updatePhotoViewModel)
         {
             /*
             try
@@ -147,7 +147,7 @@ namespace LebaneseHomemade.Data.Service
                 _card.PhotoList.AddRange(_photos);
                 _appDbContext.SaveChanges();
             }
-            return _card;
+            return _card.PhotoList;
         }
     }
 }
