@@ -19,6 +19,7 @@ namespace LebaneseHomemade.Data.ViewModel
         public MenuViewModel Menu { get; set; }
         public string Type { get; set; }
         public DateTime DateCreated { get; set; }
+        public UserOfCardViewModel User { get; set; }
     }
     public class CardGalleryViewModel
     {

@@ -86,13 +86,18 @@ namespace LebaneseHomemade.Data.Service
                         Price = item.Price
                     }).ToList()
                 },
-                DateCreated = card.DateCreated
+                DateCreated = card.DateCreated,
+                User = new UserOfCardViewModel
+                {
+                    Id = card.UserId,
+                    Name = card.User.Name
+                }
             }).ToList();
             return _card;
         }
-        public List<CardViewModel> GetCardsOfUser(int userId)
+        public List<CardViewModel> GetCardsOfUser(string userName)
         {
-            var _card = _appDbContext.Cards.Where(card=>card.UserId==userId).Select(card => new CardViewModel()
+            var _card = _appDbContext.Cards.Where(card=>card.User.Name==userName).Select(card => new CardViewModel()
             {
                 Id = card.Id,
                 Title = card.Title,
@@ -115,7 +120,12 @@ namespace LebaneseHomemade.Data.Service
                         Price = item.Price
                     }).ToList()
                 },
-                DateCreated = card.DateCreated
+                DateCreated = card.DateCreated,
+                User = new UserOfCardViewModel
+                {
+                    Id = card.UserId,
+                    Name = card.User.Name
+                }
             }).ToList();
             return _card;
         }

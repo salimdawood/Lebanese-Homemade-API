@@ -12,7 +12,7 @@ namespace LebaneseHomemade.Data.IService
     {
         List<CardViewModel> GetCards(PaginationParameter paginationParameter);
         List<CardViewModel> GetCardsByTypeId(int typeId);
-        List<CardViewModel> GetCardsOfUser(int userId);
+        List<CardViewModel> GetCardsOfUser(string userName);
         int DeleteCard(int cardId);
         Task<int> AddCard(AddCardViewModel cardViewModel);
 

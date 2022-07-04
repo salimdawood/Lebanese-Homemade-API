@@ -16,14 +16,10 @@ namespace LebaneseHomemade.Data.ViewModel
         public string Password { get; set; }
     }
 
-    public class UserWithCardListViewModel
+    public class UserOfCardViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public List<CardViewModel> CardList { get; set; }
     }
     public class UserProfileViewModel
     {

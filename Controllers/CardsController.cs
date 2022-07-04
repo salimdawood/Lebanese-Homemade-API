@@ -34,10 +34,10 @@ namespace LebaneseHomemade.Controllers
             return Ok(_cards);
         }
         // GET api/<CardsController>/GetCards/5
-        [HttpGet("GetCards/{id}")]
-        public IActionResult GetCardsOfUser([FromRoute]int id)
+        [HttpGet("GetCards/{name}")]
+        public IActionResult GetCardsOfUser([FromRoute]string name)
         {
-            var _cards = _cardService.GetCardsOfUser(id);
+            var _cards = _cardService.GetCardsOfUser(name);
             return Ok(_cards);
         }
         // GET api/<CardsController>/5
