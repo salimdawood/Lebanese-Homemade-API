@@ -4,14 +4,16 @@ using LebaneseHomemade.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LebaneseHomemade.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220715081050_arabic-column-input")]
+    partial class arabiccolumninput
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,14 +34,14 @@ namespace LebaneseHomemade.Migrations
                         .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("FaceBookLink")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(2083)");
 
                     b.Property<string>("InstagramLink")
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(2083)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
@@ -47,8 +49,8 @@ namespace LebaneseHomemade.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WhatsAppLink")
-                        .HasColumnType("int");
+                    b.Property<string>("WhatsAppLink")
+                        .HasColumnType("nvarchar(2083)");
 
                     b.HasKey("Id");
 
@@ -150,15 +152,15 @@ namespace LebaneseHomemade.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Location")
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 

@@ -17,10 +17,10 @@ namespace LebaneseHomemade.Configurations
             builder.Property(prop => prop.Email).IsRequired();
             builder.Property(prop => prop.Password).IsRequired();
             //columns types
-            builder.Property(prop => prop.Name).HasColumnType("nvarchar(50)");
+            builder.Property(prop => prop.Name).HasColumnType("nvarchar(30)");
             builder.Property(prop => prop.Email).HasColumnType("nvarchar(50)");
-            builder.Property(prop => prop.Password).HasColumnType("nvarchar(100)");
-            builder.Property(prop => prop.Location).HasColumnType("nvarchar(50)");
+            builder.Property(prop => prop.Password).HasColumnType("nvarchar(20)");
+            builder.Property(prop => prop.Location).HasColumnType("nvarchar(20)");
         }
     }
 }
