@@ -48,11 +48,5 @@ namespace LebaneseHomemade.Controllers
             int successCode = _userService.UpdateUser(id,userViewModel);
             return successCode;
         }
-
-        // DELETE api/<UsersController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

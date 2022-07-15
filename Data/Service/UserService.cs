@@ -62,12 +62,6 @@ namespace LebaneseHomemade.Data.Service
             }).FirstOrDefault();
             return _user;
         }
-        public bool LogInValidation(string name, string password)
-        {
-            var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower() && user.Password == password).FirstOrDefault();
-            return _user != null;
-        }
-
         public int UpdateUser(int userId,UserViewModel userViewModel)
         {
             var _username = _appDbContext.Users.Where(user => user.Name == userViewModel.Name.Trim().ToLower() && user.Id != userId).FirstOrDefault();

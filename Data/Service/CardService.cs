@@ -231,7 +231,7 @@ namespace LebaneseHomemade.Data.Service
                     _card.Title = updateCardViewModel.Title;
                     _card.FaceBookLink = updateCardViewModel.FaceBookLink;
                     _card.InstagramLink = updateCardViewModel.InstagramLink;
-                    _card.InstagramLink = updateCardViewModel.InstagramLink;
+                    _card.WhatsAppLink = updateCardViewModel.WhatsAppLink;
                     _card.TypeId = updateCardViewModel.TypeId;
                 }
                 

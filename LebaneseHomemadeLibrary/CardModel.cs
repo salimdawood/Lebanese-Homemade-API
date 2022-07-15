@@ -12,7 +12,7 @@ namespace LebaneseHomemadeLibrary
         public string Title { get; set; }
         public string InstagramLink { get; set; }
         public string FaceBookLink { get; set; }
-        public int WhatsAppLink { get; set; }
+        public string WhatsAppLink { get; set; }
         public DateTime DateCreated { get; set; }
 
 

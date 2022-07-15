@@ -20,7 +20,7 @@ namespace LebaneseHomemade.Configurations
             builder.Property(prop => prop.Title).HasColumnType("nvarchar(30)");
             builder.Property(prop => prop.InstagramLink).HasColumnType("nvarchar(30)");
             builder.Property(prop => prop.FaceBookLink).HasColumnType("nvarchar(50)");
-            builder.Property(prop => prop.WhatsAppLink).HasColumnType("int");
+            builder.Property(prop => prop.WhatsAppLink).HasColumnType("nvarchar(8)");
             builder.Property(prop => prop.DateCreated).HasColumnType("smalldatetime");
             //date default value
             builder.Property(prop => prop.DateCreated).HasDefaultValueSql("getdate()");
