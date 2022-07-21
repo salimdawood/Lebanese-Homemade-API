@@ -59,6 +59,36 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
+        public List<String> CleanImageInServer()
+        {
+            var _photoList = _appDbContext.Photos.ToList();
+            DirectoryInfo Folder;
+            FileInfo[] Images;
+            List<String> imagesList = new List<String>();
+            int count = 0;
+
+            Folder = new DirectoryInfo("Images");
+            Images = Folder.GetFiles();
+            foreach (var item in Images)
+            {
+                imagesList.Add(item.Name);
+            }
+            foreach (var photo in _photoList)
+            {
+                if (imagesList.Contains(photo.Name))
+                {
+                    var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
+                    FileInfo file = new(imagePath);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                    count++;
+                }
+            }
+            return imagesList;
+        }
+
         public List<PhotoModel> GetPhotos(int cardId)
         {
             return _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();

@@ -137,6 +137,17 @@ namespace LebaneseHomemade.Data.Service
                 {
                     Id = cardId
                 };
+                var _photoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
+                //delete image from server
+                foreach (var photo in _photoList)
+                {
+                    var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
+                    FileInfo file = new(imagePath);
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
                 _appDbContext.Cards.Remove(_card);
                 _appDbContext.SaveChanges();
                 return 1;

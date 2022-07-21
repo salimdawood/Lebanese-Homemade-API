@@ -45,5 +45,10 @@ namespace LebaneseHomemade.Controllers
         {
             return _photoService.DeletePhoto(id);
         }
+        [HttpDelete()]
+        public List<String> Delete()
+        {
+           return _photoService.CleanImageInServer();
+        }
     }
 }
