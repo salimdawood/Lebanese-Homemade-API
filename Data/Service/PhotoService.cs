@@ -22,16 +22,6 @@ namespace LebaneseHomemade.Data.Service
             _webHostEnvironment = webHostEnvironment;
             _imageUploadService = imageUploadService;
         }
-
-        public void AddPhoto(PhotoViewModel photoViewModel)
-        {
-            var _photo = new PhotoModel()
-            {
-                Name = photoViewModel.Name
-            };
-            _appDbContext.Photos.Add(_photo);
-            _appDbContext.SaveChanges();
-        }
         public int DeletePhoto(int cardId)
         {
             try
@@ -59,40 +49,43 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
-        public List<String> CleanImageInServer()
-        {
-            var _photoList = _appDbContext.Photos.ToList();
-            DirectoryInfo Folder;
-            FileInfo[] Images;
-            List<String> imagesList = new List<String>();
-            int count = 0;
+        //public void CleanImageInServer()
+        //{
+        //    var _photoList = _appDbContext.Photos.ToList();
+        //    DirectoryInfo Folder;
+        //    FileInfo[] Images;
+        //    List<String> imagesList = new List<String>();
+        //    List<PhotoModel> newImages = new List<PhotoModel>();
+        //    int count = 0;
 
-            Folder = new DirectoryInfo("Images");
-            Images = Folder.GetFiles();
-            foreach (var item in Images)
-            {
-                imagesList.Add(item.Name);
-            }
-            foreach (var photo in _photoList)
-            {
-                if (imagesList.Contains(photo.Name))
-                {
-                    var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
-                    FileInfo file = new(imagePath);
-                    if (file.Exists)
-                    {
-                        file.Delete();
-                    }
-                    count++;
-                }
-            }
-            return imagesList;
-        }
+        //    Folder = new DirectoryInfo("Images");
+        //    Images = Folder.GetFiles();
+        //    foreach (var item in Images)
+        //    {
+        //        imagesList.Add(item.Name);
+        //    }
+        //    foreach (var photo in _photoList)
+        //    {
+        //        /*
+        //        if (!imagesList.Contains(photo.Name))
+        //        {
+        //            var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
+        //            FileInfo file = new(imagePath);
+        //            if (file.Exists)
+        //            {
+        //                file.Delete();
+        //            }
+        //            count=count+1;
+        //        }
+        //        */
+        //        if (!imagesList.Contains(photo.Name))
+        //        {
+        //            newImages.Add(photo);
+        //        }
+        //    }
+        //    _appDbContext.Photos.RemoveRange(newImages);
+        //}
 
-        public List<PhotoModel> GetPhotos(int cardId)
-        {
-            return _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
-        }
 
         public async Task<List<PhotoModel>> UpdatePhotos(int cardId, UpdatePhotoViewModel updatePhotoViewModel)
         {

@@ -17,16 +17,12 @@ namespace LebaneseHomemade.Data.Service
     public class CardService:ICardService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly MenuService _menuService;
-        private readonly PhotoService _photoService;
         private readonly ImageUploadService _imageUploadService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public CardService(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment,MenuService menuService,PhotoService photoService,ImageUploadService imageUploadService)
+        public CardService(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment,ImageUploadService imageUploadService)
         {
             _appDbContext = appDbContext;
             _webHostEnvironment = webHostEnvironment;
-            _menuService = menuService;
-            _photoService = photoService;
             _imageUploadService = imageUploadService;
         }
 
@@ -225,9 +221,12 @@ namespace LebaneseHomemade.Data.Service
         public CardModel GetCardById(int cardId)
         {
             var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
-            _card.Menu = _menuService.GetMenuOfCard(_card.Id);
-            _card.PhotoList = _photoService.GetPhotos(_card.Id);
-
+            _card.PhotoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
+            _card.Menu = _appDbContext.Menus.Where(menu => menu.CardId == cardId).FirstOrDefault();
+            if (_card.Menu != null)
+            {
+                _card.Menu.ItemList = _appDbContext.Items.Where(item => item.MenuId == _card.Menu.Id).ToList();
+            }
             return _card;
         }
 

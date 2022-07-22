@@ -20,13 +20,12 @@ namespace LebaneseHomemade.Controllers
         {
             _menuService = menuService;
         }
-
-        // GET api/<MenusController>/5
-        [HttpGet("{id}")]
-        public MenuModel Get([FromRoute] int id)
-        {
-            return _menuService.GetMenuOfCard(id);
-        }
+        //// GET api/<MenusController>/5
+        //[HttpGet("{id}")]
+        //public MenuModel Get([FromRoute] int id)
+        //{
+        //    return _menuService.GetMenuOfCard(id);
+        //}
         // Update api/<MenusController>/5
         [HttpPut("{id}")]
         public int Put([FromRoute]int id,[FromBody] List<ItemListViewModel> itemListViewModels)

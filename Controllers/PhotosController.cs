@@ -21,18 +21,6 @@ namespace LebaneseHomemade.Controllers
         {
             _photoService = photoService;
         }
-        // GET api/<PhotosController>/5
-        [HttpGet("{id}")]
-        public void Get(int cardId)
-        {
-            _photoService.GetPhotos(cardId);
-        }
-        // POST api/<PhotosController>
-        [HttpPost]
-        public void Post([FromBody] PhotoViewModel photoViewModel)
-        {
-            _photoService.AddPhoto(photoViewModel);
-        }
         // POST api/<PhotosController>
         [HttpPut("{id}")]
         public Task<List<PhotoModel>> Put([FromRoute] int id,[FromForm] UpdatePhotoViewModel updatePhotoViewModel)
@@ -44,11 +32,6 @@ namespace LebaneseHomemade.Controllers
         public int Delete([FromRoute]int id)
         {
             return _photoService.DeletePhoto(id);
-        }
-        [HttpDelete()]
-        public List<String> Delete()
-        {
-           return _photoService.CleanImageInServer();
         }
     }
 }
