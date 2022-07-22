@@ -20,12 +20,7 @@ namespace LebaneseHomemade.Controllers
         {
             _userService = userService;
         }
-        // GET api/<UsersController>/5
-        [HttpGet("{name}")]
-        public bool Get(string name)
-        {
-            return _userService.NameExist(name);
-        }
+       
         // GET api/<UsersController>/5
         [HttpGet()]
         public UserProfileViewModel Get([FromQuery]string name,[FromQuery]string password)

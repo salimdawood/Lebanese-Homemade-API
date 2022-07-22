@@ -11,7 +11,6 @@ namespace LebaneseHomemade.Data.IService
     {
         int AddUser(UserViewModel userViewModel);
         int UpdateUser(int userId,UserViewModel userViewModel);
-        bool NameExist(string name);
         UserProfileViewModel GetUserByName(string name, string password);
        
     }

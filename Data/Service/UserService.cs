@@ -17,7 +17,7 @@ namespace LebaneseHomemade.Data.Service
         }
         public int AddUser(UserViewModel userViewModel)
         {
-            var _username = _appDbContext.Users.Where(user => user.Name == userViewModel.Name.Trim().ToLower()).FirstOrDefault();
+            var _username = _appDbContext.Users.Where(user => user.Name.ToLower() == userViewModel.Name.Trim().ToLower()).FirstOrDefault();
             if(_username != null)
             {
                 return -1;
@@ -26,9 +26,9 @@ namespace LebaneseHomemade.Data.Service
             {
                 var _user = new UserModel()
                 {
-                    Name = userViewModel.Name,
-                    Location = userViewModel.Location,
-                    Email = userViewModel.Email,
+                    Name = userViewModel.Name.Trim(),
+                    Location = userViewModel.Location.Trim(),
+                    Email = userViewModel.Email.Trim(),
                     Password = userViewModel.Password
                 };
                 _appDbContext.Users.Add(_user);
@@ -40,14 +40,9 @@ namespace LebaneseHomemade.Data.Service
                 return 0;
             }
         }
-        public bool NameExist(string name)
-        {
-            var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower()).FirstOrDefault();
-            return _user != null;
-        }
         public UserProfileViewModel GetUserByName(string name,string password)
         {
-            var _user = _appDbContext.Users.Where(user => user.Name == name.Trim().ToLower() && user.Password == password).Select(user => new UserProfileViewModel() {
+            var _user = _appDbContext.Users.Where(user => user.Name.ToLower() == name.Trim().ToLower() && user.Password == password).Select(user => new UserProfileViewModel() {
                 Id = user.Id,
                 Name = user.Name,
                 Location = user.Location,
@@ -64,7 +59,7 @@ namespace LebaneseHomemade.Data.Service
         }
         public int UpdateUser(int userId,UserViewModel userViewModel)
         {
-            var _username = _appDbContext.Users.Where(user => user.Name == userViewModel.Name.Trim().ToLower() && user.Id != userId).FirstOrDefault();
+            var _username = _appDbContext.Users.Where(user => user.Name.ToLower() == userViewModel.Name.Trim().ToLower() && user.Id != userId).FirstOrDefault();
             if (_username != null)
             {
                 return -1;
@@ -74,10 +69,10 @@ namespace LebaneseHomemade.Data.Service
                 var _user = _appDbContext.Users.Where(user => user.Id == userId).FirstOrDefault();
                 if (_user != null)
                 {
-                    _user.Name = userViewModel.Name.Trim().ToLower();
-                    _user.Email = userViewModel.Email.Trim().ToLower();
-                    _user.Location = userViewModel.Location.Trim().ToLower();
-                    _user.Password = userViewModel.Password.Trim();
+                    _user.Name = userViewModel.Name.Trim();
+                    _user.Email = userViewModel.Email.Trim();
+                    _user.Location = userViewModel.Location.Trim();
+                    _user.Password = userViewModel.Password;
                     _appDbContext.SaveChanges();
                 }
                 return 1;

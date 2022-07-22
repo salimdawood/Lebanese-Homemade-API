@@ -31,7 +31,7 @@ namespace LebaneseHomemade.Controllers
         [HttpDelete("{id}")]
         public int Delete([FromRoute]int id)
         {
-            return _photoService.DeletePhoto(id);
+            return _photoService.DeletePhotos(id);
         }
     }
 }

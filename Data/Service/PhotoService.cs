@@ -22,7 +22,7 @@ namespace LebaneseHomemade.Data.Service
             _webHostEnvironment = webHostEnvironment;
             _imageUploadService = imageUploadService;
         }
-        public int DeletePhoto(int cardId)
+        public int DeletePhotos(int cardId)
         {
             try
             {
@@ -45,60 +45,26 @@ namespace LebaneseHomemade.Data.Service
             }
             catch (Exception)
             {
-                return -1;
+                return 0;
             }
         }
-
-        //public void CleanImageInServer()
-        //{
-        //    var _photoList = _appDbContext.Photos.ToList();
-        //    DirectoryInfo Folder;
-        //    FileInfo[] Images;
-        //    List<String> imagesList = new List<String>();
-        //    List<PhotoModel> newImages = new List<PhotoModel>();
-        //    int count = 0;
-
-        //    Folder = new DirectoryInfo("Images");
-        //    Images = Folder.GetFiles();
-        //    foreach (var item in Images)
-        //    {
-        //        imagesList.Add(item.Name);
-        //    }
-        //    foreach (var photo in _photoList)
-        //    {
-        //        /*
-        //        if (!imagesList.Contains(photo.Name))
-        //        {
-        //            var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
-        //            FileInfo file = new(imagePath);
-        //            if (file.Exists)
-        //            {
-        //                file.Delete();
-        //            }
-        //            count=count+1;
-        //        }
-        //        */
-        //        if (!imagesList.Contains(photo.Name))
-        //        {
-        //            newImages.Add(photo);
-        //        }
-        //    }
-        //    _appDbContext.Photos.RemoveRange(newImages);
-        //}
-
-
         public async Task<List<PhotoModel>> UpdatePhotos(int cardId, UpdatePhotoViewModel updatePhotoViewModel)
         {
-            /*
             try
             {
-                var _photos = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
+
+                var _photoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
                 var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
-                foreach (var photo in _photos)
+
+                //if string photolist is empty then the user wants to delete all his previous photos from db and server
+                if (updatePhotoViewModel.StringPhotoList == null)
                 {
-                    if (!updatePhotoViewModel.StringPhotoList.Contains(photo.Name))
+                    _appDbContext.Photos.RemoveRange(_photoList);
+                    _appDbContext.SaveChanges();
+
+                    //delete image from server
+                    foreach (var photo in _photoList)
                     {
-                        //photo is in db and server and user wants to delete it
                         var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
                         FileInfo file = new(imagePath);
                         if (file.Exists)
@@ -107,70 +73,45 @@ namespace LebaneseHomemade.Data.Service
                         }
                     }
                 }
-                //add new image files to db and server
-                _card.PhotoList = await _imageUploadService.ImageUpload(updatePhotoViewModel.FilePhotoList);
-                _appDbContext.SaveChanges();
-                return 1;
+                else
+                {
+                    foreach (var photo in _photoList)
+                    {
+                        if (!updatePhotoViewModel.StringPhotoList.Contains(photo.Name))
+                        {
+                            //photo is in db and server and user wants to delete it
+                            var _photo = _appDbContext.Photos.Where(photoEntity => photoEntity.Name == photo.Name).FirstOrDefault();
+                            if (_photo != null)
+                            {
+                                _appDbContext.Photos.Remove(_photo);
+
+                            }
+                            var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
+                            FileInfo file = new(imagePath);
+                            if (file.Exists)
+                            {
+                                file.Delete();
+                            }
+                        }
+                        _appDbContext.SaveChanges();
+                    }
+                }
+
+
+                if (updatePhotoViewModel.FilePhotoList != null)
+                {
+                    //add new image files to db and server
+                    var _photos = await _imageUploadService.ImageUpload(updatePhotoViewModel.FilePhotoList);
+                    _card.PhotoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
+                    _card.PhotoList.AddRange(_photos);
+                    _appDbContext.SaveChanges();
+                }
+                return _card.PhotoList;
             }
             catch (Exception)
             {
-                return -1;
+                return new List<PhotoModel>();
             }
-            */
-            var _photoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
-            var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
-
-            //if string photolist is empty then the user wants to delete all his previous photos from db and server
-            if(updatePhotoViewModel.StringPhotoList == null)
-            {
-                _appDbContext.Photos.RemoveRange(_photoList);
-                _appDbContext.SaveChanges();
-
-                //delete image from server
-                foreach (var photo in _photoList)
-                {
-                    var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
-                    FileInfo file = new(imagePath);
-                    if (file.Exists)
-                    {
-                        file.Delete();
-                    }
-                }
-            }
-            else
-            {
-                foreach (var photo in _photoList)
-                {
-                    if (!updatePhotoViewModel.StringPhotoList.Contains(photo.Name))
-                    {
-                        //photo is in db and server and user wants to delete it
-                        var _photo = _appDbContext.Photos.Where(photoEntity => photoEntity.Name == photo.Name).FirstOrDefault();
-                        if(_photo != null)
-                        {
-                            _appDbContext.Photos.Remove(_photo);
-
-                        }
-                        var imagePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Images", photo.Name);
-                        FileInfo file = new(imagePath);
-                        if (file.Exists)
-                        {
-                            file.Delete();
-                        }
-                    }
-                    _appDbContext.SaveChanges();
-                }
-            }
-
-
-            if (updatePhotoViewModel.FilePhotoList != null)
-            {
-                //add new image files to db and server
-                var _photos = await _imageUploadService.ImageUpload(updatePhotoViewModel.FilePhotoList);
-                _card.PhotoList =  _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
-                _card.PhotoList.AddRange(_photos);
-                _appDbContext.SaveChanges();
-            }
-            return _card.PhotoList;
         }
     }
 }
