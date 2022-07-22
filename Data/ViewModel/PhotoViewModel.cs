@@ -12,10 +12,6 @@ namespace LebaneseHomemade.Data.ViewModel
         public int Id { get; set; }
         public string Name { get; set; }
     }
-    public class PhotoWithCardIdViewModel
-    {
-        public string Name { get; set; }
-    }
     public class UpdatePhotoViewModel
     {
         public List<IFormFile> FilePhotoList { get; set; }

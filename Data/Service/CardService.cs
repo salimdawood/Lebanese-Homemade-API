@@ -173,16 +173,6 @@ namespace LebaneseHomemade.Data.Service
                 _card.PhotoList = new List<PhotoModel>();
                 if (addCardViewModel.PhotoList != null)
                 {
-                    /*
-                    foreach (var photoFile in addCardViewModel.PhotoList)
-                    {
-                        var _photo = new PhotoModel()
-                        {
-                            Name = await ImageUpload(photoFile)
-                        };
-                        _card.PhotoList.Add(_photo);
-                    }
-                    */
                     var _imageNames = await _imageUploadService.ImageUpload(addCardViewModel.PhotoList);
                     _card.PhotoList = _imageNames;
                 }

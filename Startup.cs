@@ -39,7 +39,6 @@ namespace LebaneseHomemade
             services.AddTransient<UserService>();
             services.AddTransient<CardService>();
             services.AddTransient<MenuService>();
-            services.AddTransient<ItemService>();
             services.AddTransient<PhotoService>();
             services.AddTransient<TypeService>();
             services.AddTransient<ImageUploadService>();
