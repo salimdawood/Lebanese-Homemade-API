@@ -18,7 +18,7 @@ namespace LebaneseHomemade.Configurations
             builder.Property(prop => prop.MenuId).IsRequired();
             //columns types
             builder.Property(prop => prop.Name).HasColumnType("nvarchar(50)");
-            builder.Property(prop => prop.Price).HasColumnType("int");
+            builder.Property(prop => prop.Price).HasColumnType("varchar(20)");
         }
     }
 }

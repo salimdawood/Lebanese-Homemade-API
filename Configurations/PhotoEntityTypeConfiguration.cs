@@ -17,7 +17,7 @@ namespace LebaneseHomemade.Configurations
             builder.Property(prop => prop.Name).IsRequired();
             builder.Property(prop => prop.CardId).IsRequired();
             //columns types
-            builder.Property(prop => prop.Name).HasColumnType("nvarchar(50)");
+            builder.Property(prop => prop.Name).HasColumnType("nvarchar(100)");
         }
     }
 }
