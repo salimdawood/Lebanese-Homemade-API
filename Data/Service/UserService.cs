@@ -40,6 +40,17 @@ namespace LebaneseHomemade.Data.Service
                 return 0;
             }
         }
+
+        public string GetEmailOfUser(string name)
+        {
+            var _email = _appDbContext.Users.Where(user => user.Name.ToLower() == name.Trim().ToLower()).FirstOrDefault();
+            if(_email != null)
+            {
+                return _email.Email;
+            }
+            return null;
+        }
+
         public UserProfileViewModel GetUserByName(string name,string password)
         {
             var _user = _appDbContext.Users.Where(user => user.Name.ToLower() == name.Trim().ToLower() && user.Password == password).Select(user => new UserProfileViewModel() {

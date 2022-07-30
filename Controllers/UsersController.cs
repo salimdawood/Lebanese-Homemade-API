@@ -27,6 +27,11 @@ namespace LebaneseHomemade.Controllers
         {
             return _userService.GetUserByName(name, password);
         }
+        [HttpGet("{name}")]
+        public string Get([FromRoute] string name)
+        {
+            return _userService.GetEmailOfUser(name);
+        }
 
         // POST api/<UsersController>
         [HttpPost]
