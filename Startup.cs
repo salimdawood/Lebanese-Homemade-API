@@ -56,6 +56,7 @@ namespace LebaneseHomemade
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LebaneseHomemade", Version = "v1" });
             });
             //JSON
+            services.AddControllers().AddNewtonsoftJson();
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
         }

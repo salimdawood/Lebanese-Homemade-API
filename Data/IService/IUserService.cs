@@ -1,5 +1,6 @@
 ﻿using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace LebaneseHomemade.Data.IService
         int UpdateUser(int userId,UserViewModel userViewModel);
         UserProfileViewModel GetUserByName(string name, string password);
         string GetEmailOfUser(string name);
+        int ResetPassword(string name, JsonPatchDocument password);
        
     }
 }

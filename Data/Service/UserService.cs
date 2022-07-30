@@ -1,6 +1,7 @@
 ﻿using LebaneseHomemade.Data.IService;
 using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,6 +69,19 @@ namespace LebaneseHomemade.Data.Service
             }).FirstOrDefault();
             return _user;
         }
+
+        public int ResetPassword(string name, JsonPatchDocument password)
+        {
+            var _user = _appDbContext.Users.Where(user => user.Name.ToLower() == name.Trim().ToLower()).FirstOrDefault();
+            if(_user != null)
+            {
+                password.ApplyTo(_user);
+                _appDbContext.SaveChanges();
+                return 1;
+            }
+            return 0;
+        }
+
         public int UpdateUser(int userId,UserViewModel userViewModel)
         {
             var _username = _appDbContext.Users.Where(user => user.Name.ToLower() == userViewModel.Name.Trim().ToLower() && user.Id != userId).FirstOrDefault();

@@ -1,6 +1,7 @@
 ﻿using LebaneseHomemade.Data.Service;
 using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,13 @@ namespace LebaneseHomemade.Controllers
         public int Put([FromRoute]int id, [FromBody] UserViewModel userViewModel)
         {
             int successCode = _userService.UpdateUser(id,userViewModel);
+            return successCode;
+        }
+        // PATCH api/<UsersController>/5
+        [HttpPatch("{name}")]
+        public int Patch([FromRoute] string name, [FromBody]JsonPatchDocument password)
+        {
+            var successCode = _userService.ResetPassword(name, password);
             return successCode;
         }
     }
