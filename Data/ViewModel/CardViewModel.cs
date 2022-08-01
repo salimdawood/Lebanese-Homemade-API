@@ -17,7 +17,7 @@ namespace LebaneseHomemade.Data.ViewModel
         public string WhatsAppLink { get; set; }
         public List<PhotoViewModel> PhotoList { get; set; }
         public MenuViewModel Menu { get; set; }
-        public string Type { get; set; }
+        public TypeViewModel Type { get; set; }
         public DateTime DateCreated { get; set; }
         public UserOfCardViewModel User { get; set; }
     }

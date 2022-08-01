@@ -57,8 +57,10 @@ namespace LebaneseHomemade
             });
             //JSON
             services.AddControllers().AddNewtonsoftJson();
+            /*
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

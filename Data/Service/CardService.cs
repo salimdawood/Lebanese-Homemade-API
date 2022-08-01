@@ -37,8 +37,12 @@ namespace LebaneseHomemade.Data.Service
                 InstagramLink = card.InstagramLink,
                 FaceBookLink = card.FaceBookLink,
                 WhatsAppLink = card.WhatsAppLink,
-                Type = card.Type.Name,
-                PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
+                    Type = new TypeViewModel
+                    {
+                        Id = card.Type.Id,
+                        Name = card.Type.Name
+                    },
+                    PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
                 {
                     Id = photo.Id,
                     Name = photo.Name
@@ -66,7 +70,11 @@ namespace LebaneseHomemade.Data.Service
                 InstagramLink = card.InstagramLink,
                 FaceBookLink = card.FaceBookLink,
                 WhatsAppLink = card.WhatsAppLink,
-                Type = card.Type.Name,
+                Type = new TypeViewModel
+                {
+                    Id = card.Type.Id,
+                    Name = card.Type.Name
+                },
                 PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
                 {
                     Id = photo.Id,
@@ -100,7 +108,11 @@ namespace LebaneseHomemade.Data.Service
                 InstagramLink = card.InstagramLink,
                 FaceBookLink = card.FaceBookLink,
                 WhatsAppLink = card.WhatsAppLink,
-                Type = card.Type.Name,
+                Type = new TypeViewModel
+                {
+                    Id = card.Type.Id,
+                    Name = card.Type.Name
+                },
                 PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
                 {
                     Id = photo.Id,
@@ -208,15 +220,42 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
-        public CardModel GetCardById(int cardId)
+        public CardViewModel GetCardById(int cardId)
         {
-            var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
-            _card.PhotoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
-            _card.Menu = _appDbContext.Menus.Where(menu => menu.CardId == cardId).FirstOrDefault();
-            if (_card.Menu != null)
+            var _card = _appDbContext.Cards.Where(card => card.Id == cardId).Select(card => new CardViewModel()
             {
-                _card.Menu.ItemList = _appDbContext.Items.Where(item => item.MenuId == _card.Menu.Id).ToList();
-            }
+                Id = card.Id,
+                Title = card.Title,
+                InstagramLink = card.InstagramLink,
+                FaceBookLink = card.FaceBookLink,
+                WhatsAppLink = card.WhatsAppLink,
+                Type = new TypeViewModel
+                {
+                    Id = card.Type.Id,
+                    Name = card.Type.Name
+                },
+                PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
+                {
+                    Id = photo.Id,
+                    Name = photo.Name
+                }).ToList(),
+                Menu = (card.Menu == null) ? null : new MenuViewModel()
+                {
+                    Id = card.Menu.Id,
+                    ItemList = card.Menu.ItemList.Select(item => new ItemViewModel()
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        Price = item.Price
+                    }).ToList()
+                },
+                DateCreated = card.DateCreated,
+                User = new UserOfCardViewModel
+                {
+                    Id = card.UserId,
+                    Name = card.User.Name
+                }
+            }).FirstOrDefault();
             return _card;
         }
 
@@ -245,6 +284,12 @@ namespace LebaneseHomemade.Data.Service
                 _transaction.Rollback();
                 return -1;
             }
+        }
+
+        public int cardsCount(int typeId)
+        {
+            var _cardsCount = _appDbContext.Cards.Where(card => card.TypeId == typeId).Count();
+            return _cardsCount;
         }
     }
 }

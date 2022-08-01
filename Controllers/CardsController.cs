@@ -39,10 +39,16 @@ namespace LebaneseHomemade.Controllers
         {
             var _cards = _cardService.GetCardsOfUser(name);
             return Ok(_cards);
+        }// GET api/<CardsController>/GetCardsCount/5
+        [HttpGet("GetCardsCount/{id}")]
+        public int GetCardsCount([FromRoute] int id)
+        {
+            var _cards = _cardService.cardsCount(id);
+            return _cards;
         }
         // GET api/<CardsController>/5
         [HttpGet("{id}")]
-        public CardModel GetCardsById([FromRoute] int id)
+        public CardViewModel GetCardsById([FromRoute] int id)
         {
             return _cardService.GetCardById(id);
         }
