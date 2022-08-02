@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace LebaneseHomemade.Data.Service
 {
@@ -19,6 +20,7 @@ namespace LebaneseHomemade.Data.Service
         private readonly AppDbContext _appDbContext;
         private readonly ImageUploadService _imageUploadService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+
         public CardService(AppDbContext appDbContext, IWebHostEnvironment webHostEnvironment,ImageUploadService imageUploadService)
         {
             _appDbContext = appDbContext;
@@ -61,9 +63,18 @@ namespace LebaneseHomemade.Data.Service
                 }).ToList();
             return _card;
         }
-        public List<CardViewModel> GetCardsByTypeId(int typeId)
+        public List<CardViewModel> GetCardsByTypeId(int typeId,PaginationParameter paginationParameter)
         {
-            var _card = _appDbContext.Cards.Where(card => card.TypeId == typeId).Select(card => new CardViewModel()
+            var _cardBase = _appDbContext.Cards.AsQueryable();
+
+            if (typeId != -1)
+            {
+                _cardBase = _cardBase.Where(card => card.TypeId == typeId);
+            }
+          
+            var _card = _cardBase.Skip((paginationParameter.PageNumber - 1) * paginationParameter.PageSize)
+                .Take(paginationParameter.PageSize).
+                Select(card => new CardViewModel()
             {
                 Id = card.Id,
                 Title = card.Title,
@@ -288,7 +299,15 @@ namespace LebaneseHomemade.Data.Service
 
         public int cardsCount(int typeId)
         {
-            var _cardsCount = _appDbContext.Cards.Where(card => card.TypeId == typeId).Count();
+            var _cardsCount = 0;
+            if (typeId == -1)
+            {
+                _cardsCount = _appDbContext.Cards.Count();
+            }
+            else
+            {
+                _cardsCount = _appDbContext.Cards.Where(card => card.TypeId == typeId).Count();
+            }
             return _cardsCount;
         }
     }

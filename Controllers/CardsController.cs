@@ -19,18 +19,18 @@ namespace LebaneseHomemade.Controllers
         {
             _cardService = cardService;
         }
-        // GET: api/<CardsController>
-        [HttpGet]
-        public IActionResult Get([FromQuery] PaginationParameter paginationParameter)
+        //// GET: api/<CardsController>
+        //[HttpGet]
+        //public IActionResult Get([FromQuery] PaginationParameter paginationParameter)
+        //{
+        //    var _cards = _cardService.GetCards(paginationParameter);
+        //    return Ok(_cards);
+        //}
+        // GET api/<CardsController>/5?pageSize=&pageNumber=
+        [HttpGet("{typeId}")]
+        public IActionResult GetCardsOfType([FromRoute]int typeId, [FromQuery] PaginationParameter paginationParameter)
         {
-            var _cards = _cardService.GetCards(paginationParameter);
-            return Ok(_cards);
-        }
-        // GET api/<CardsController>/GetCards?typeid=5
-        [HttpGet("GetCards")]
-        public IActionResult GetCardsOfType([FromQuery]int typeId)
-        {
-            var _cards = _cardService.GetCardsByTypeId(typeId);
+            var _cards = _cardService.GetCardsByTypeId(typeId,paginationParameter);
             return Ok(_cards);
         }
         // GET api/<CardsController>/GetCards/5
@@ -46,12 +46,12 @@ namespace LebaneseHomemade.Controllers
             var _cards = _cardService.cardsCount(id);
             return _cards;
         }
-        // GET api/<CardsController>/5
-        [HttpGet("{id}")]
-        public CardViewModel GetCardsById([FromRoute] int id)
-        {
-            return _cardService.GetCardById(id);
-        }
+        //// GET api/<CardsController>/5
+        //[HttpGet("{id}")]
+        //public CardViewModel GetCardsById([FromRoute] int id)
+        //{
+        //    return _cardService.GetCardById(id);
+        //}
         // POST api/<CardsController>
         [HttpPost]
         public async Task<int> Post([FromForm] AddCardViewModel addCardViewModel)
@@ -71,6 +71,5 @@ namespace LebaneseHomemade.Controllers
         {
             return _cardService.DeleteCard(id);
         }
-        
     }
 }
