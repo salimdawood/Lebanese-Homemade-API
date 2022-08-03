@@ -19,15 +19,8 @@ namespace LebaneseHomemade.Controllers
         {
             _cardService = cardService;
         }
-        //// GET: api/<CardsController>
-        //[HttpGet]
-        //public IActionResult Get([FromQuery] PaginationParameter paginationParameter)
-        //{
-        //    var _cards = _cardService.GetCards(paginationParameter);
-        //    return Ok(_cards);
-        //}
         // GET api/<CardsController>/5?pageSize=&pageNumber=
-        [HttpGet("{typeId}")]
+        [HttpGet("GetCardsById/{typeId}")]
         public IActionResult GetCardsOfType([FromRoute]int typeId, [FromQuery] PaginationParameter paginationParameter)
         {
             var _cards = _cardService.GetCardsByTypeId(typeId,paginationParameter);
@@ -43,15 +36,15 @@ namespace LebaneseHomemade.Controllers
         [HttpGet("GetCardsCount/{id}")]
         public int GetCardsCount([FromRoute] int id)
         {
-            var _cards = _cardService.cardsCount(id);
+            var _cards = _cardService.CardsCount(id);
             return _cards;
         }
-        //// GET api/<CardsController>/5
-        //[HttpGet("{id}")]
-        //public CardViewModel GetCardsById([FromRoute] int id)
-        //{
-        //    return _cardService.GetCardById(id);
-        //}
+        // GET api/<CardsController>/5
+        [HttpGet("{id}")]
+        public CardViewModel GetCardsById([FromRoute] int id)
+        {
+            return _cardService.GetCardById(id);
+        }
         // POST api/<CardsController>
         [HttpPost]
         public async Task<int> Post([FromForm] AddCardViewModel addCardViewModel)

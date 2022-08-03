@@ -28,41 +28,7 @@ namespace LebaneseHomemade.Data.Service
             _imageUploadService = imageUploadService;
         }
 
-        public List<CardViewModel> GetCards(PaginationParameter paginationParameter)
-        {
-            var _card = _appDbContext.Cards.Skip((paginationParameter.PageNumber-1)*paginationParameter.PageSize)
-                .Take(paginationParameter.PageSize)
-                .Select(card => new CardViewModel()
-            {
-                Id = card.Id,
-                Title = card.Title,
-                InstagramLink = card.InstagramLink,
-                FaceBookLink = card.FaceBookLink,
-                WhatsAppLink = card.WhatsAppLink,
-                    Type = new TypeViewModel
-                    {
-                        Id = card.Type.Id,
-                        Name = card.Type.Name
-                    },
-                    PhotoList = card.PhotoList.Select(photo => new PhotoViewModel()
-                {
-                    Id = photo.Id,
-                    Name = photo.Name
-                }).ToList(),
-                Menu = (card.Menu == null) ? null : new MenuViewModel()
-                {
-                    Id = card.Menu.Id,
-                    ItemList = card.Menu.ItemList.Select(item => new ItemViewModel()
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        Price = item.Price
-                    }).ToList()
-                },
-                DateCreated = card.DateCreated
-                }).ToList();
-            return _card;
-        }
+        
         public List<CardViewModel> GetCardsByTypeId(int typeId,PaginationParameter paginationParameter)
         {
             var _cardBase = _appDbContext.Cards.AsQueryable();
@@ -297,7 +263,7 @@ namespace LebaneseHomemade.Data.Service
             }
         }
 
-        public int cardsCount(int typeId)
+        public int CardsCount(int typeId)
         {
             var _cardsCount = 0;
             if (typeId == -1)

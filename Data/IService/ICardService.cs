@@ -10,7 +10,6 @@ namespace LebaneseHomemade.Data.IService
 {
     public interface ICardService
     {
-        List<CardViewModel> GetCards(PaginationParameter paginationParameter);
         List<CardViewModel> GetCardsByTypeId(int typeId, PaginationParameter paginationParameter);
         List<CardViewModel> GetCardsOfUser(string userName);
         int DeleteCard(int cardId);
@@ -18,6 +17,6 @@ namespace LebaneseHomemade.Data.IService
 
         CardViewModel GetCardById(int cardId);
         int UpdateCardById(int cardId,UpdateCardViewModel updateCardViewModel);
-        int cardsCount(int typeId);
+        int CardsCount(int typeId);
     }
 }
