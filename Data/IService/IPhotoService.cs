@@ -10,6 +10,6 @@ namespace LebaneseHomemade.Data.IService
     public interface IPhotoService
     {
         int DeletePhotos(int cardId);
-        Task<List<PhotoModel>> UpdatePhotos(int cardId,UpdatePhotoViewModel updatePhotoViewModel);
+        Task<List<PhotoViewModel>> UpdatePhotos(int cardId,UpdatePhotoViewModel updatePhotoViewModel);
     }
 }

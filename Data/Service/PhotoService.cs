@@ -2,6 +2,7 @@
 using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,13 +49,12 @@ namespace LebaneseHomemade.Data.Service
                 return 0;
             }
         }
-        public async Task<List<PhotoModel>> UpdatePhotos(int cardId, UpdatePhotoViewModel updatePhotoViewModel)
+        public async Task<List<PhotoViewModel>> UpdatePhotos(int cardId, UpdatePhotoViewModel updatePhotoViewModel)
         {
             try
             {
 
                 var _photoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
-                var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
 
                 //if string photolist is empty then the user wants to delete all his previous photos from db and server
                 if (updatePhotoViewModel.StringPhotoList == null)
@@ -101,16 +101,20 @@ namespace LebaneseHomemade.Data.Service
                 if (updatePhotoViewModel.FilePhotoList != null)
                 {
                     //add new image files to db and server
-                    var _photos = await _imageUploadService.ImageUpload(updatePhotoViewModel.FilePhotoList);
-                    _card.PhotoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
-                    _card.PhotoList.AddRange(_photos);
+                    var _photosAddedName = await _imageUploadService.ImageUpload(updatePhotoViewModel.FilePhotoList,cardId);
+                    _appDbContext.Photos.AddRange(_photosAddedName);
                     _appDbContext.SaveChanges();
                 }
-                return _card.PhotoList;
+                var _photos = _appDbContext.Photos.Where(photo => photo.CardId == cardId).Select(photo => new PhotoViewModel()
+                {
+                    Id = photo.Id,
+                    Name = photo.Name
+                }).ToList();
+                return _photos;
             }
             catch (Exception)
             {
-                return new List<PhotoModel>();
+                return new List<PhotoViewModel>();
             }
         }
     }
