@@ -139,7 +139,7 @@ namespace LebaneseHomemade.Data.Service
             }
             catch (Exception)
             {
-                return -1;
+                return 0;
             }
         }
 
@@ -193,7 +193,7 @@ namespace LebaneseHomemade.Data.Service
             catch (Exception)
             {
                 _transaction.Rollback();
-                return -1;
+                return 0;
             }
         }
 
@@ -259,7 +259,7 @@ namespace LebaneseHomemade.Data.Service
             catch (Exception)
             {
                 _transaction.Rollback();
-                return -1;
+                return 0;
             }
         }
 

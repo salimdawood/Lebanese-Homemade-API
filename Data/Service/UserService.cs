@@ -106,8 +106,6 @@ namespace LebaneseHomemade.Data.Service
             {
                 return 0;
             }
-
-            
         }
     }
 }

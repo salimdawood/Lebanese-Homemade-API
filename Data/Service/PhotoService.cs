@@ -51,9 +51,9 @@ namespace LebaneseHomemade.Data.Service
         }
         public async Task<List<PhotoViewModel>> UpdatePhotos(int cardId, UpdatePhotoViewModel updatePhotoViewModel)
         {
+            using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {
-
                 var _photoList = _appDbContext.Photos.Where(photo => photo.CardId == cardId).ToList();
 
                 //if string photolist is empty then the user wants to delete all his previous photos from db and server
@@ -110,10 +110,12 @@ namespace LebaneseHomemade.Data.Service
                     Id = photo.Id,
                     Name = photo.Name
                 }).ToList();
+                _transaction.Commit();
                 return _photos;
             }
             catch (Exception)
             {
+                _transaction.Rollback();
                 return new List<PhotoViewModel>();
             }
         }

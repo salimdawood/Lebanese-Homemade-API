@@ -31,7 +31,7 @@ namespace LebaneseHomemade.Data.Service
             }
             catch (Exception)
             {
-                return - 1;
+                return 0;
             }
         }
         public int UpdateMenuOfCard(int cardId, List<ItemListViewModel> itemListViewModels)
@@ -61,7 +61,7 @@ namespace LebaneseHomemade.Data.Service
             }
             catch (Exception)
             {
-                return -1;
+                return 0;
             }
         }
     }
