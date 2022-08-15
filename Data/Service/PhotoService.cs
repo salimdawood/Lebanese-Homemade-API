@@ -25,6 +25,7 @@ namespace LebaneseHomemade.Data.Service
         }
         public int DeletePhotos(int cardId)
         {
+            using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {
                 //delete image name from database
@@ -42,10 +43,12 @@ namespace LebaneseHomemade.Data.Service
                         file.Delete();
                     }
                 }
+                _transaction.Commit();
                 return 1;
             }
             catch (Exception)
             {
+                _transaction.Rollback();
                 return 0;
             }
         }
