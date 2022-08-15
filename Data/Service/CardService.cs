@@ -3,15 +3,12 @@ using LebaneseHomemade.Data.Pagination;
 using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
 
 namespace LebaneseHomemade.Data.Service
 {
@@ -116,6 +113,7 @@ namespace LebaneseHomemade.Data.Service
         }
         public int DeleteCard(int cardId)
         {
+            using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {
                 var _card = new CardModel()
@@ -135,10 +133,12 @@ namespace LebaneseHomemade.Data.Service
                 }
                 _appDbContext.Cards.Remove(_card);
                 _appDbContext.SaveChanges();
+                _transaction.Commit();
                 return 1;
             }
             catch (Exception)
             {
+                _transaction.Rollback();
                 return 0;
             }
         }
