@@ -24,6 +24,11 @@ namespace LebaneseHomemade.Configurations
             builder.Property(prop => prop.DateCreated).HasColumnType("smalldatetime");
             //date default value
             builder.Property(prop => prop.DateCreated).HasDefaultValueSql("getdate()");
+            //indexes
+            builder.HasIndex(prop => prop.TypeId).IsClustered(false).IncludeProperties(prop => new
+            { prop.Title,prop.DateCreated,prop.FaceBookLink,prop.InstagramLink,prop.WhatsAppLink,prop.UserId });
+            builder.HasIndex(prop => prop.UserId).IsClustered(false).IncludeProperties(prop => new
+            { prop.Title, prop.DateCreated, prop.FaceBookLink, prop.InstagramLink, prop.WhatsAppLink, prop.TypeId });
         }
     }
 }

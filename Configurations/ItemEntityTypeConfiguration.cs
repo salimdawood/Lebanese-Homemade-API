@@ -19,6 +19,8 @@ namespace LebaneseHomemade.Configurations
             //columns types
             builder.Property(prop => prop.Name).HasColumnType("nvarchar(50)");
             builder.Property(prop => prop.Price).HasColumnType("varchar(20)");
+            //indexes
+            builder.HasIndex(prop => prop.MenuId).IsClustered(false).IncludeProperties(prop => new { prop.Name,prop.Price });
         }
     }
 }

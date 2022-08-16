@@ -18,6 +18,8 @@ namespace LebaneseHomemade.Configurations
             builder.Property(prop => prop.CardId).IsRequired();
             //columns types
             builder.Property(prop => prop.Name).HasColumnType("nvarchar(100)");
+            //indexes
+            builder.HasIndex(prop => prop.CardId).IsClustered(false).IncludeProperties(prop => new { prop.Name });
         }
     }
 }

@@ -21,6 +21,8 @@ namespace LebaneseHomemade.Configurations
             builder.Property(prop => prop.Email).HasColumnType("nvarchar(50)");
             builder.Property(prop => prop.Password).HasColumnType("nvarchar(20)");
             builder.Property(prop => prop.Location).HasColumnType("nvarchar(50)");
+            //indexes
+            builder.HasIndex(prop => prop.Name).IsUnique().IsClustered(false).IncludeProperties(prop=>new {prop.Password});
         }
     }
 }
