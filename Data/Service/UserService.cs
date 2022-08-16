@@ -28,7 +28,7 @@ namespace LebaneseHomemade.Data.Service
                 var _user = new UserModel()
                 {
                     Name = userViewModel.Name.Trim(),
-                    Location = userViewModel.Location.Trim(),
+                    Location = userViewModel.Location.Trim().Length == 0 ? null : userViewModel.Location.Trim(),
                     Email = userViewModel.Email.Trim(),
                     Password = userViewModel.Password
                 };
@@ -96,7 +96,7 @@ namespace LebaneseHomemade.Data.Service
                 {
                     _user.Name = userViewModel.Name.Trim();
                     _user.Email = userViewModel.Email.Trim();
-                    _user.Location = userViewModel.Location.Trim();
+                    _user.Location = userViewModel.Location.Trim().Length == 0 ? null : userViewModel.Location.Trim();
                     _user.Password = userViewModel.Password;
                     _appDbContext.SaveChanges();
                 }
