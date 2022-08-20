@@ -28,7 +28,7 @@ namespace LebaneseHomemade.Data.Service
         
         public List<CardViewModel> GetCardsByTypeId(int typeId,PaginationParameter paginationParameter)
         {
-            var _cardBase = _appDbContext.Cards.AsQueryable();
+            var _cardBase = _appDbContext.Cards.OrderByDescending(card=>card.DateCreated).AsQueryable();
 
             if (typeId != -1)
             {
