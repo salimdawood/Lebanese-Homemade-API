@@ -1,4 +1,5 @@
 ﻿using LebaneseHomemade.Data.IService;
+using LebaneseHomemade.Data.Validation;
 using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
 using System;
@@ -36,6 +37,7 @@ namespace LebaneseHomemade.Data.Service
         }
         public int UpdateMenuOfCard(int cardId, List<ItemListViewModel> itemListViewModels)
         {
+            if (!ItemValidations.ItemListValidation(itemListViewModels)) return -2;
             try
             {
                 var _menu = _appDbContext.Menus.Where(menu => menu.CardId == cardId).FirstOrDefault();

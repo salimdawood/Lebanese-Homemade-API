@@ -25,7 +25,9 @@ namespace LebaneseHomemade.Data.Validation
                 !password_regex.IsMatch(userViewModel.Password)
                ) return false;
             //Location
-            if (!location_regex.IsMatch(userViewModel.Location)) return false;
+            if (!string.IsNullOrWhiteSpace(userViewModel.Location) &&
+                !location_regex.IsMatch(userViewModel.Location)
+               ) return false;
             //if passed all validations
             return true;
         }

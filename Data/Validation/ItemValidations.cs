@@ -17,7 +17,9 @@ namespace LebaneseHomemade.Data.Validation
                 !name_regex.IsMatch(itemViewModel.Name)
                    ) return false;
                 //Price
-                if (!price_regex.IsMatch(itemViewModel.Price)) return false;
+                if (!string.IsNullOrWhiteSpace(itemViewModel.Price) &&
+                    !price_regex.IsMatch(itemViewModel.Price)
+                   ) return false;
             }
             //passed all validations
             return true;

@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using LebaneseHomemade.Data.Validation;
 
 namespace LebaneseHomemade.Data.Service
 {
@@ -145,6 +146,7 @@ namespace LebaneseHomemade.Data.Service
 
         public async Task<int> AddCard(AddCardViewModel addCardViewModel)
         {
+            if (!CardValidations.AddCardValidation(addCardViewModel)) return -2;
             using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {
@@ -238,6 +240,7 @@ namespace LebaneseHomemade.Data.Service
 
         public int UpdateCardById(int cardId, UpdateCardViewModel updateCardViewModel)
         {
+            if (!CardValidations.UpdateCardValidation(updateCardViewModel)) return -2;
             using var _transaction = _appDbContext.Database.BeginTransaction();
             var _card = _appDbContext.Cards.Where(card => card.Id == cardId).FirstOrDefault();
             try
