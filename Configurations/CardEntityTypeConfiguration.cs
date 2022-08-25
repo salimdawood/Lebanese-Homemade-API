@@ -1,10 +1,6 @@
 ﻿using LebaneseHomemadeLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LebaneseHomemade.Configurations
 {
@@ -29,6 +25,8 @@ namespace LebaneseHomemade.Configurations
             { prop.Title,prop.DateCreated,prop.FaceBookLink,prop.InstagramLink,prop.WhatsAppLink,prop.UserId });
             builder.HasIndex(prop => prop.UserId).IsClustered(false).IncludeProperties(prop => new
             { prop.Title, prop.DateCreated, prop.FaceBookLink, prop.InstagramLink, prop.WhatsAppLink, prop.TypeId });
+            builder.HasIndex(prop => prop.DateCreated).IsClustered(false).IncludeProperties(prop => new
+            { prop.Title, prop.FaceBookLink, prop.InstagramLink, prop.WhatsAppLink, prop.TypeId,prop.UserId });
         }
     }
 }
