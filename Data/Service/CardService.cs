@@ -146,7 +146,8 @@ namespace LebaneseHomemade.Data.Service
 
         public async Task<int> AddCard(AddCardViewModel addCardViewModel)
         {
-            if (!CardValidations.AddCardValidation(addCardViewModel)) return -2;
+            List<ItemModel> _itemModels = new();
+            if (!CardValidations.AddCardValidation(addCardViewModel,_itemModels)) return -2;
             using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {
@@ -170,21 +171,8 @@ namespace LebaneseHomemade.Data.Service
                 //add menu and add itemlist to it then add the menu to card object
                 _card.Menu = new MenuModel
                 {
-                    ItemList = new List<ItemModel>()
+                    ItemList = _itemModels
                 };
-                if (addCardViewModel.ItemList != null)
-                {
-                    foreach (var item in addCardViewModel.ItemList)
-                    {
-                        ItemListViewModel itemListViewModel = JsonConvert.DeserializeObject<ItemListViewModel>(item);
-                        var _item = new ItemModel()
-                        {
-                            Name = itemListViewModel.Name,
-                            Price = itemListViewModel.Price
-                        };
-                        _card.Menu.ItemList.Add(_item);
-                    }
-                }
                 //add new entity to db
                 _appDbContext.Cards.Add(_card);
                 _appDbContext.SaveChanges();
@@ -256,8 +244,7 @@ namespace LebaneseHomemade.Data.Service
                 
                 _appDbContext.SaveChanges();
                 _transaction.Commit();
-                var _cardId = _card.Id;
-                return _cardId;
+                return 1;
             }
             catch (Exception)
             {

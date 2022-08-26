@@ -1,4 +1,7 @@
 ﻿using LebaneseHomemade.Data.ViewModel;
+using LebaneseHomemadeLibrary;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace LebaneseHomemade.Data.Validation
@@ -9,7 +12,10 @@ namespace LebaneseHomemade.Data.Validation
         private static readonly Regex facebook_regex = new(@"^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669.]{5,50}$");
         private static readonly Regex instagram_regex = new(@"^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669_.]{1,30}$");
         private static readonly Regex whatsapp_regex = new(@"^[0-9\u0660-\u0669]{8}$");
-        public static bool AddCardValidation(AddCardViewModel addCardViewModel)
+        private static readonly Regex name_regex = new(@"^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669 '.]{3,50}$");
+        private static readonly Regex price_regex = new(@"^[lL0-9\u0660-\u0669,$.]{0,20}$");
+
+        public static bool AddCardValidation(AddCardViewModel addCardViewModel,List<ItemModel> itemModels)
         {
             //Title
             if (string.IsNullOrWhiteSpace(addCardViewModel.Title) ||
@@ -27,6 +33,29 @@ namespace LebaneseHomemade.Data.Validation
             if (!string.IsNullOrWhiteSpace(addCardViewModel.WhatsAppLink) &&
                 !whatsapp_regex.IsMatch(addCardViewModel.WhatsAppLink)
                ) return false;
+            //Item List
+            if (addCardViewModel.ItemList != null)
+            {
+                ItemListViewModel itemListViewModel;
+                foreach (var item in addCardViewModel.ItemList)
+                {
+                    itemListViewModel = JsonConvert.DeserializeObject<ItemListViewModel>(item);
+                    //Name
+                    if (string.IsNullOrWhiteSpace(itemListViewModel.Name) ||
+                    !name_regex.IsMatch(itemListViewModel.Name)
+                       ) return false;
+                    //Price
+                    if (!string.IsNullOrWhiteSpace(itemListViewModel.Price) &&
+                        !price_regex.IsMatch(itemListViewModel.Price)
+                       ) return false;
+                    var _item = new ItemModel()
+                    {
+                        Name = itemListViewModel.Name,
+                        Price = itemListViewModel.Price
+                    };
+                    itemModels.Add(_item);
+                }
+            }
             //if passed all validations
             return true;
         }
