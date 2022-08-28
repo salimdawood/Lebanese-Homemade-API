@@ -31,7 +31,7 @@ namespace LebaneseHomemade.Data.Service
         {
             var _cardBase = _appDbContext.Cards.OrderByDescending(card=>card.DateCreated).AsQueryable();
 
-            if (typeId != -1)
+            if (typeId != -1 && typeId != -2)
             {
                 _cardBase = _cardBase.Where(card => card.TypeId == typeId);
             }
@@ -256,7 +256,7 @@ namespace LebaneseHomemade.Data.Service
         public int CardsCount(int typeId)
         {
             var _cardsCount = 0;
-            if (typeId == -1)
+            if (typeId == -1 || typeId == -2)
             {
                 _cardsCount = _appDbContext.Cards.Count();
             }
