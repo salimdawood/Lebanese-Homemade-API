@@ -44,6 +44,7 @@ namespace LebaneseHomemade.Data.Service
 
         public string GetEmailOfUser(string name)
         {
+            if (!UserValidations.NameValidation(name)) return null;
             var _email = _appDbContext.Users.Where(user => user.Name.ToLower() == name.Trim().ToLower()).FirstOrDefault();
             if(_email != null)
             {
@@ -54,6 +55,7 @@ namespace LebaneseHomemade.Data.Service
 
         public UserProfileViewModel GetUserByName(string name,string password)
         {
+            if (!UserValidations.NameAndPasswordValidation(name, password)) return null;
             var _user = _appDbContext.Users.Where(user => user.Name.ToLower() == name.Trim().ToLower() && user.Password == password).Select(user => new UserProfileViewModel() {
                 Id = user.Id,
                 Name = user.Name,

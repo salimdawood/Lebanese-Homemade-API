@@ -8,11 +8,11 @@ namespace LebaneseHomemade.Data.Validation
 {
     public static class CardValidations
     {
-        private static readonly Regex title_regex = new(@"^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669 .'-]{3,30}$");
+        private static readonly Regex title_regex = new(@"^(?=(?:.*[a-zA-Z0-9\u0621-\u064A\u0660-\u0669]){3})[a-zA-Z0-9\u0621-\u064A\u0660-\u0669 .'-]{0,27}$");
         private static readonly Regex facebook_regex = new(@"^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669.]{5,50}$");
         private static readonly Regex instagram_regex = new(@"^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669_.]{1,30}$");
         private static readonly Regex whatsapp_regex = new(@"^[0-9\u0660-\u0669]{8}$");
-        private static readonly Regex name_regex = new(@"^[a-zA-Z0-9\u0621-\u064A\u0660-\u0669 '.]{3,50}$");
+        private static readonly Regex name_regex = new(@"^(?=(?:.*[a-zA-Z0-9\u0621-\u064A\u0660-\u0669]){3})[a-zA-Z0-9\u0621-\u064A\u0660-\u0669 '.]{0,47}$");
         private static readonly Regex price_regex = new(@"^[lL0-9\u0660-\u0669,$.]{0,20}$");
 
         public static bool AddCardValidation(AddCardViewModel addCardViewModel,List<ItemModel> itemModels)
