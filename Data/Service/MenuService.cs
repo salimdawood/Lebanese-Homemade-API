@@ -22,12 +22,11 @@ namespace LebaneseHomemade.Data.Service
             try
             {
                 var _itemList = _appDbContext.Items.Where(item => item.MenuId == menuId).ToList();
-                if (_itemList.Count == 0)
+                if (_itemList.Count != 0)
                 {
-                    return 1;
+                    _appDbContext.Items.RemoveRange(_itemList);
+                    _appDbContext.SaveChanges();
                 }
-                _appDbContext.Items.RemoveRange(_itemList);
-                _appDbContext.SaveChanges();
                 return 1;
             }
             catch (Exception)
@@ -41,23 +40,22 @@ namespace LebaneseHomemade.Data.Service
             try
             {
                 var _menu = _appDbContext.Menus.Where(menu => menu.CardId == cardId).FirstOrDefault();
-                var _itemList = _appDbContext.Items.Where(item => item.MenuId == _menu.Id).ToList();
-                List<ItemModel> _itemModels = new();
+                var _oldItems = _appDbContext.Items.Where(item => item.MenuId == _menu.Id).ToList();
 
-                foreach (var item in itemListViewModels)
+                List<ItemModel> _newItems = new();
+                foreach(var item in itemListViewModels)
                 {
                     var _item = new ItemModel
                     {
                         Name = item.Name,
                         Price = item.Price
                     };
-                    _itemModels.Add(_item);
+                    _newItems.Add(_item);
                 }
                 //remove old menu items
-                _appDbContext.Items.RemoveRange(_itemList);
-                //addthe updated menu items
-                _menu.ItemList = _itemModels;
-
+                _appDbContext.Items.RemoveRange(_oldItems);
+                //add the updated menu items
+                _menu.ItemList = _newItems;
                 _appDbContext.SaveChanges();
                 return 1;
             }

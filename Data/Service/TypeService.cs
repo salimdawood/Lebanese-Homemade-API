@@ -1,10 +1,7 @@
 ﻿using LebaneseHomemade.Data.IService;
-using LebaneseHomemade.Data.ViewModel;
 using LebaneseHomemadeLibrary;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LebaneseHomemade.Data.Service
 {
@@ -38,8 +35,8 @@ namespace LebaneseHomemade.Data.Service
 
         public List<TypeModel> GetTypes()
         {
-            var _type = _appDbContext.Types.ToList();
-            return _type;
+            var _types = _appDbContext.Types.ToList();
+            return _types;
         }
 
         public void UpdateType(int typeId,string typeName)

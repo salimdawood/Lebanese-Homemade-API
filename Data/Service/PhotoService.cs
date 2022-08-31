@@ -1,4 +1,5 @@
 ﻿using LebaneseHomemade.Data.IService;
+using LebaneseHomemade.Data.Validation;
 using LebaneseHomemade.Data.ViewModel;
 using Microsoft.AspNetCore.Hosting;
 using System;
@@ -52,6 +53,7 @@ namespace LebaneseHomemade.Data.Service
         }
         public async Task<List<PhotoViewModel>> UpdatePhotos(int cardId, UpdatePhotoViewModel updatePhotoViewModel)
         {
+            if (!PhotoValidations.PhotoSizeValidation(updatePhotoViewModel.FilePhotoList)) return new List<PhotoViewModel>();
             using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {
