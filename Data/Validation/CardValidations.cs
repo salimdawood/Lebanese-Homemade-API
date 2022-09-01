@@ -50,8 +50,8 @@ namespace LebaneseHomemade.Data.Validation
                        ) return false;
                     var _item = new ItemModel()
                     {
-                        Name = itemListViewModel.Name,
-                        Price = itemListViewModel.Price
+                        Name = itemListViewModel.Name.Trim(),
+                        Price = itemListViewModel.Price.Trim().Length == 0? null : itemListViewModel.Price.Trim()
                     };
                     itemModels.Add(_item);
                 }

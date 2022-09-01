@@ -151,7 +151,7 @@ namespace LebaneseHomemade.Data.Service
         {
             List<ItemModel> _itemModels = new();
             if (!CardValidations.AddCardValidation(addCardViewModel,_itemModels)) return -2;
-            if (!PhotoValidations.PhotoSizeValidation(addCardViewModel.PhotoList)) return -2;
+            if (addCardViewModel.PhotoList != null && !PhotoValidations.PhotoSizeValidation(addCardViewModel.PhotoList)) return -2;
             using var _transaction = _appDbContext.Database.BeginTransaction();
             try
             {

@@ -47,8 +47,8 @@ namespace LebaneseHomemade.Data.Service
                 {
                     var _item = new ItemModel
                     {
-                        Name = item.Name,
-                        Price = item.Price
+                        Name = item.Name.Trim(),
+                        Price = item.Price.Trim().Length == 0 ? null : item.Price.Trim()
                     };
                     _newItems.Add(_item);
                 }
