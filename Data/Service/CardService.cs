@@ -8,8 +8,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using LebaneseHomemade.Data.Validation;
+using System.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace LebaneseHomemade.Data.Service
 {
@@ -29,16 +30,18 @@ namespace LebaneseHomemade.Data.Service
         
         public List<CardViewModel> GetCardsByTypeId(int typeId,PaginationParameter paginationParameter)
         {
-            var _cardBase = _appDbContext.Cards.OrderByDescending(card=>card.DateCreated).AsQueryable();
-
+            var _cardBase = _appDbContext.Cards.AsNoTracking();
             if (typeId != -1 && typeId != -2)
             {
                 _cardBase = _cardBase.Where(card => card.TypeId == typeId);
             }
           
-            var _card = _cardBase.Skip((paginationParameter.PageNumber - 1) * paginationParameter.PageSize)
-                .Take(paginationParameter.PageSize).
-                Select(card => new CardViewModel()
+            var _cards =
+                _cardBase
+                .OrderByDescending(card => card.DateCreated)
+                .Skip((paginationParameter.PageNumber - 1) * paginationParameter.PageSize)
+                .Take(paginationParameter.PageSize)
+                .Select(card => new CardViewModel()
             {
                 Id = card.Id,
                 Title = card.Title,
@@ -71,8 +74,8 @@ namespace LebaneseHomemade.Data.Service
                     Id = card.UserId,
                     Name = card.User.Name
                 }
-            }).ToList();
-            return _card;
+            }).AsSingleQuery().ToList();
+            return _cards;
         }
         public List<CardViewModel> GetCardsOfUser(string userName)
         {
