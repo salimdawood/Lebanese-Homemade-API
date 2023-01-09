@@ -10,7 +10,7 @@ I used ASP.NET CORE for building the WEB API due to the light weight and simplic
 
 ## Screenshots
 
-<img src="https://github.com/salimdawood/Media/tree/master/react%2Bapi/p6.png" width="100%" alt="Main page photo"/>
+<img src="https://github.com/salimdawood/Media/blob/master/react%2Bapi/p6.png" width="100%" alt="Main page photo"/>
 
 <img src="https://github.com/salimdawood/Media/blob/master/react%2Bapi/v1.gif" width="100%" alt="Swagger Page Test"/>
 
